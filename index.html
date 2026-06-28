@@ -1,0 +1,1037 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Officina dei Prompt · Infografiche con NotebookLM</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Lexend:wght@400;500;600;700&family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --cream:#F5F9F5; --warm:#EBF2EB; --card:#FFFFFF;
+  --green:#1B6B3A; --green2:#22804A; --greenD:#0E4423; --greenL:rgba(27,107,58,.07);
+  --gold:#B8860B; --gold2:#D4A017; --goldL:rgba(184,134,11,.10);
+  --text:#1A2E1A; --muted:#4A6B4A; --light:#8BA88B;
+  --warn:#B8860B; --warnL:rgba(184,134,11,.12);
+  --brd:#C8DCC8; --brd2:#A8C4A8;
+  --shadow:0 2px 12px rgba(27,107,58,.06);
+  --shadow2:0 6px 28px rgba(27,107,58,.12);
+  --body:'Atkinson Hyperlegible',Helvetica,Arial,sans-serif;
+  --head:'Lexend',sans-serif;
+  --mono:'JetBrains Mono',monospace;
+  --maxw:1440px;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{background:var(--cream);color:var(--text);font-family:var(--body);font-size:18px;line-height:1.6}
+body{padding-bottom:40px}
+h1,h2,h3,h4{font-family:var(--head);line-height:1.25;color:var(--greenD)}
+button{font-family:var(--head);cursor:pointer;border:none;background:none}
+.wrap{max-width:var(--maxw);margin:0 auto;padding:0 22px}
+
+/* ---------- TOPBAR ---------- */
+header.top{background:linear-gradient(135deg,var(--green),var(--greenD));color:#fff;padding:18px 0;box-shadow:var(--shadow2);position:sticky;top:0;z-index:30}
+.top .wrap{display:flex;align-items:center;gap:18px;flex-wrap:wrap}
+.brand{display:flex;align-items:center;gap:13px;flex:1;min-width:260px}
+.brand .logo{width:46px;height:46px;flex:0 0 auto}
+.brand h1{color:#fff;font-size:1.32rem;letter-spacing:-.01em}
+.brand p{color:#CFE6D6;font-size:.82rem;font-family:var(--body)}
+.top-actions{display:flex;gap:10px;flex-wrap:wrap;align-items:center}
+.btn{display:inline-flex;align-items:center;gap:9px;font-size:1rem;font-weight:600;padding:12px 20px;border-radius:13px;min-height:48px;transition:transform .12s,box-shadow .2s,background .2s}
+.btn:active{transform:translateY(1px)}
+.btn-primary{background:var(--gold2);color:#3a2c05;box-shadow:0 4px 14px rgba(184,134,11,.4)}
+.btn-primary:hover{background:#e3ab1c}
+.btn-ghost{background:rgba(255,255,255,.14);color:#fff;border:1.5px solid rgba(255,255,255,.35)}
+.btn-ghost:hover{background:rgba(255,255,255,.24)}
+.btn svg{width:21px;height:21px;flex:0 0 auto}
+
+/* ---------- INTRO / GUIDA ---------- */
+.intro{margin-top:22px}
+.panel{background:var(--card);border:1.5px solid var(--brd);border-radius:18px;box-shadow:var(--shadow)}
+.guida-head{display:flex;align-items:center;gap:14px;padding:18px 22px;width:100%;text-align:left;background:none;border-radius:18px}
+.guida-head .ic{width:40px;height:40px;flex:0 0 auto;background:var(--greenL);border-radius:11px;display:grid;place-items:center}
+.guida-head .ic svg{width:24px;height:24px}
+.guida-head .tt{flex:1}
+.guida-head h2{font-size:1.12rem}
+.guida-head .sub{font-size:.86rem;color:var(--muted);font-family:var(--body)}
+.guida-head .chev{transition:transform .25s}
+.guida-head .chev svg{width:22px;height:22px}
+.guida[open] .guida-head .chev{transform:rotate(180deg)}
+.guida-body{padding:4px 22px 24px}
+.guida details{margin:0}
+.guida summary{list-style:none}
+.guida summary::-webkit-details-marker{display:none}
+
+.anatomia{display:grid;grid-template-columns:repeat(auto-fit,minmax(168px,1fr));gap:12px;margin:6px 0 8px}
+.step{background:var(--greenL);border:1px solid var(--brd);border-radius:13px;padding:14px}
+.step .n{font-family:var(--mono);font-weight:600;font-size:.78rem;color:var(--green2);background:#fff;border:1px solid var(--brd);border-radius:8px;padding:2px 9px;display:inline-block;margin-bottom:8px}
+.step h4{font-size:.98rem;margin-bottom:3px}
+.step p{font-size:.84rem;color:var(--muted)}
+.tip{display:flex;gap:11px;align-items:flex-start;background:var(--goldL);border:1px solid var(--gold);border-radius:12px;padding:13px 15px;margin-top:14px}
+.tip svg{width:22px;height:22px;flex:0 0 auto;margin-top:1px}
+.tip p{font-size:.9rem;color:#5c4708}
+.tip b{color:#3a2c05}
+
+/* ---------- TOPIC TITLE BAND ---------- */
+.topicband{margin-top:22px;display:flex;align-items:flex-start;gap:16px;flex-wrap:wrap}
+.topicband .meta{flex:1;min-width:240px}
+.disc-badge{display:inline-flex;align-items:center;gap:7px;font-family:var(--head);font-weight:600;font-size:.78rem;color:var(--green2);background:var(--greenL);border:1px solid var(--brd);border-radius:999px;padding:5px 13px;letter-spacing:.02em;text-transform:uppercase}
+.disc-badge svg{width:15px;height:15px}
+.topicband h2.titolo{font-size:1.7rem;margin-top:9px;letter-spacing:-.01em}
+.counter{font-family:var(--mono);font-size:.84rem;color:var(--muted);background:#fff;border:1px solid var(--brd);border-radius:10px;padding:8px 13px;align-self:center;white-space:nowrap}
+.empty-hint{color:var(--muted);font-size:1.02rem;margin-top:6px}
+
+/* ---------- KEYWORD PILLS ---------- */
+.kw-row{display:flex;flex-wrap:wrap;gap:9px;margin-top:16px}
+.kw-row .lab{width:100%;font-size:.82rem;color:var(--muted);font-family:var(--head);font-weight:500;margin-bottom:1px}
+.kw{font-family:var(--head);font-weight:500;font-size:.95rem;color:var(--greenD);background:#fff;border:1.5px solid var(--brd2);border-radius:999px;padding:9px 15px;min-height:42px;display:inline-flex;align-items:center;gap:8px;transition:all .15s}
+.kw:hover{border-color:var(--green2);background:var(--greenL);transform:translateY(-1px)}
+.kw svg{width:15px;height:15px;opacity:.6}
+.kw.used{background:var(--greenL);border-style:dashed;opacity:.65}
+
+/* ---------- TWO CARDS ---------- */
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:20px;margin-top:20px;align-items:start}
+.cardbox{background:var(--card);border:1.5px solid var(--brd);border-radius:18px;box-shadow:var(--shadow);overflow:hidden}
+.cardbox-h{display:flex;align-items:center;gap:11px;padding:15px 20px;border-bottom:1.5px solid var(--brd);background:var(--warm)}
+.cardbox-h .ic{width:34px;height:34px;flex:0 0 auto;background:#fff;border:1px solid var(--brd);border-radius:9px;display:grid;place-items:center}
+.cardbox-h .ic svg{width:20px;height:20px}
+.cardbox-h h3{font-size:1.04rem;flex:1}
+.cardbox-h .hint{font-size:.78rem;color:var(--muted);font-family:var(--body)}
+.cardbox-b{padding:20px}
+
+/* card instruction box */
+.sel-help{margin-top:16px;display:flex;gap:10px;align-items:flex-start;background:var(--greenL);border:1px dashed var(--brd2);border-radius:12px;padding:12px 14px}
+.sel-help svg{width:20px;height:20px;flex:0 0 auto;margin-top:2px}
+.sel-help p{font-size:.86rem;color:var(--muted)}
+
+/* testo di riferimento (step 1) */
+.reflab{display:flex;align-items:center;gap:8px;font-family:var(--head);font-weight:600;font-size:.86rem;color:var(--greenD);margin:18px 0 7px}
+.reflab svg{width:17px;height:17px;flex:0 0 auto}
+.fonteref{font-size:.97rem;line-height:1.6;color:var(--text);background:var(--warm);border:1.5px solid var(--brd);border-left:4px solid var(--green2);border-radius:12px;padding:14px 16px;max-height:300px;overflow:auto;user-select:text}
+.fonteref p{margin-bottom:10px}
+.fonteref p:last-child{margin-bottom:0}
+.fonteref .lead{font-weight:700;color:var(--greenD)}
+
+/* builder */
+.dropzone{min-height:96px;border:2px dashed var(--brd2);border-radius:14px;padding:13px;background:var(--cream);transition:all .15s;display:flex;flex-wrap:wrap;gap:9px;align-content:flex-start}
+.dropzone.drag-over{border-color:var(--green);background:var(--greenL);box-shadow:inset 0 0 0 2px var(--green)}
+.dropzone .placeholder{color:var(--light);font-size:.95rem;align-self:center;width:100%;text-align:center;pointer-events:none}
+.chip{display:inline-flex;align-items:center;gap:8px;background:#fff;border:1.5px solid var(--green2);border-radius:11px;padding:8px 10px 8px 13px;font-size:.95rem;color:var(--greenD);max-width:100%;box-shadow:var(--shadow)}
+.chip span{overflow:hidden;text-overflow:ellipsis;white-space:nowrap;max-width:280px}
+.chip button{display:grid;place-items:center;width:24px;height:24px;border-radius:7px;background:var(--warnL);transition:background .15s}
+.chip button:hover{background:var(--gold)}
+.chip button svg{width:14px;height:14px}
+
+.controls{margin-top:18px;display:grid;gap:14px}
+.ctrl label{display:block;font-family:var(--head);font-weight:600;font-size:.88rem;color:var(--greenD);margin-bottom:6px}
+.ctrl select,.ctrl .seg{width:100%}
+select{font-family:var(--body);font-size:1rem;width:100%;padding:11px 13px;border:1.5px solid var(--brd2);border-radius:11px;background:#fff;color:var(--text);min-height:46px}
+select:focus{outline:none;border-color:var(--green2);box-shadow:0 0 0 3px var(--greenL)}
+.seg{display:flex;gap:7px;flex-wrap:wrap}
+.seg button{flex:1;min-width:90px;font-size:.9rem;font-weight:500;padding:10px 8px;border-radius:11px;border:1.5px solid var(--brd2);background:#fff;color:var(--muted);min-height:44px}
+.seg button.on{background:var(--green);color:#fff;border-color:var(--green)}
+.style-pick{display:flex;gap:9px;align-items:stretch}
+.style-pick select{flex:1}
+.style-pick button{flex:0 0 auto;padding:0 15px;border:1.5px solid var(--brd2);border-radius:11px;background:#fff;color:var(--green2);font-weight:600;font-size:.86rem;display:inline-flex;align-items:center;gap:7px}
+.style-pick button:hover{border-color:var(--green2);background:var(--greenL)}
+.style-pick button svg{width:17px;height:17px}
+.style-desc{font-size:.82rem;color:var(--muted);margin-top:6px;min-height:1.1em}
+
+/* prompt output */
+.outwrap{margin-top:20px}
+.outwrap .outh{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:9px;flex-wrap:wrap}
+.outwrap .outh h4{font-size:1rem;display:flex;align-items:center;gap:8px}
+.outwrap .outh h4 svg{width:19px;height:19px}
+.out-actions{display:flex;gap:8px}
+.mini{font-size:.86rem;font-weight:600;padding:9px 14px;border-radius:10px;min-height:42px;display:inline-flex;align-items:center;gap:7px}
+.mini svg{width:16px;height:16px}
+.mini-gold{background:var(--gold2);color:#3a2c05}
+.mini-gold:hover{background:#e3ab1c}
+.mini-ghost{background:#fff;border:1.5px solid var(--brd2);color:var(--muted)}
+.mini-ghost:hover{border-color:var(--green2);color:var(--green2)}
+#promptOut{width:100%;min-height:230px;font-family:var(--mono);font-size:.92rem;line-height:1.62;color:var(--text);background:#fbfdfb;border:1.5px solid var(--brd2);border-radius:13px;padding:16px;resize:vertical}
+#promptOut:focus{outline:none;border-color:var(--green2);box-shadow:0 0 0 3px var(--greenL)}
+.copied-flash{color:var(--green2);font-weight:600;font-size:.86rem;opacity:0;transition:opacity .2s}
+.copied-flash.show{opacity:1}
+
+/* two-step builder */
+.stepnum{width:30px;height:30px;flex:0 0 auto;background:var(--green);color:#fff;border-radius:9px;font-family:var(--head);font-weight:700;font-size:1.02rem;display:grid;place-items:center;box-shadow:0 2px 7px rgba(27,107,58,.28)}
+.kw .ico-check{display:none}
+.kw.done{background:var(--green);border-color:var(--green);color:#fff;cursor:default}
+.kw.done .ico-plus{display:none}
+.kw.done .ico-check{display:inline}
+.kw.done svg{opacity:1}
+#fonteOut{width:100%;min-height:250px;font-family:var(--body);font-size:1.02rem;line-height:1.6;color:var(--text);background:#fbfdfb;border:1.5px solid var(--brd2);border-radius:13px;padding:15px;resize:vertical}
+#fonteOut:focus{outline:none;border-color:var(--green2);box-shadow:0 0 0 3px var(--greenL)}
+#fonteOut::placeholder{color:var(--light)}
+.charcount{font-family:var(--mono);font-size:.78rem;color:var(--muted);align-self:center}
+.kwlab{width:100%;font-family:var(--head);font-weight:600;font-size:.86rem;color:var(--greenD);margin-bottom:4px}
+.concept-tools{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:14px}
+.btn-addsel{font-size:.86rem;font-weight:600;padding:9px 14px;border-radius:999px;min-height:42px;display:inline-flex;align-items:center;gap:7px;background:var(--goldL);border:1.5px solid var(--gold);color:#5c4708}
+.btn-addsel:hover{background:var(--gold)}
+.btn-addsel svg{width:16px;height:16px}
+
+/* ---------- MODAL (galleria stili / info docenti) ---------- */
+.modal-bg{position:fixed;inset:0;background:rgba(14,68,35,.55);backdrop-filter:blur(3px);z-index:100;display:none;align-items:flex-start;justify-content:center;padding:40px 16px;overflow-y:auto}
+.modal-bg.open{display:flex}
+.modal{background:var(--card);border-radius:20px;max-width:920px;width:100%;box-shadow:var(--shadow2);animation:pop .25s}
+@keyframes pop{from{transform:translateY(14px);opacity:0}to{transform:none;opacity:1}}
+.modal-h{display:flex;align-items:center;gap:13px;padding:20px 24px;border-bottom:1.5px solid var(--brd);position:sticky;top:0;background:var(--card);border-radius:20px 20px 0 0;z-index:2}
+.modal-h h3{flex:1;font-size:1.2rem}
+.modal-h .x{width:42px;height:42px;border-radius:11px;background:var(--warm);display:grid;place-items:center}
+.modal-h .x:hover{background:var(--brd)}
+.modal-h .x svg{width:20px;height:20px}
+.modal-b{padding:22px 24px 28px}
+.style-search{width:100%;font-size:1rem;padding:12px 14px;border:1.5px solid var(--brd2);border-radius:12px;margin-bottom:16px;font-family:var(--body)}
+.style-search:focus{outline:none;border-color:var(--green2);box-shadow:0 0 0 3px var(--greenL)}
+.style-cat{font-family:var(--head);font-weight:600;font-size:.82rem;color:var(--green2);text-transform:uppercase;letter-spacing:.04em;margin:18px 0 9px}
+.style-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));gap:11px}
+.style-card{text-align:left;background:#fff;border:1.5px solid var(--brd);border-radius:13px;padding:13px 14px;transition:all .15s}
+.style-card:hover{border-color:var(--green2);box-shadow:var(--shadow);transform:translateY(-2px)}
+.style-card .nm{font-family:var(--head);font-weight:600;font-size:.96rem;color:var(--greenD);display:flex;align-items:center;justify-content:space-between;gap:8px}
+.style-card .nm svg{width:16px;height:16px;opacity:0;transition:opacity .15s}
+.style-card:hover .nm svg{opacity:.7}
+.style-card .ds{font-size:.83rem;color:var(--muted);margin-top:5px}
+.tema-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:11px;margin-top:6px}
+
+/* info docenti tabs */
+.idoc{font-family:var(--body)}
+.idoc h4{font-family:var(--head);color:var(--greenD);margin:16px 0 7px;font-size:1.02rem}
+.idoc p{font-size:.95rem;color:var(--text);margin-bottom:9px}
+.idoc ul{margin:0 0 9px 20px}
+.idoc li{font-size:.93rem;margin-bottom:5px}
+.tagline{display:flex;flex-wrap:wrap;gap:7px;margin-top:8px}
+.tag{font-family:var(--head);font-size:.78rem;font-weight:500;color:var(--green2);background:var(--greenL);border:1px solid var(--brd);border-radius:999px;padding:5px 12px}
+
+/* ---------- FOOTER ---------- */
+footer{margin-top:34px;text-align:center;color:var(--muted);font-size:.84rem;padding:0 22px}
+footer .sep{color:var(--brd2);margin:0 8px}
+
+/* ---------- TUTORIAL NOTEBOOKLM ---------- */
+.tut-lead{color:var(--muted);font-size:.96rem;margin-bottom:6px;max-width:78ch}
+.tut-step{margin-top:26px;padding-top:24px;border-top:1px solid var(--brd)}
+.tut-step:first-of-type{border-top:0;padding-top:8px;margin-top:6px}
+.tut-head{display:flex;align-items:center;gap:12px}
+.tut-n{width:40px;height:40px;flex:0 0 auto;background:var(--green);color:#fff;border-radius:12px;font-family:var(--head);font-weight:700;font-size:1.18rem;display:grid;place-items:center;box-shadow:0 3px 10px rgba(27,107,58,.3)}
+.tut-head h3{font-size:1.14rem}
+.tut-intro{color:var(--muted);font-size:.94rem;margin:9px 0 16px;max-width:76ch}
+.annot{position:relative;display:flex;gap:20px;align-items:flex-start}
+.shotwrap{position:relative;flex:1 1 60%;min-width:0;border-radius:14px;overflow:hidden;border:2px solid #22323d;box-shadow:0 10px 32px rgba(14,68,35,.16);background:#0b1418;align-self:flex-start}
+.shotwrap img{display:block;width:100%;height:auto}
+.cards{flex:1 1 38%;display:flex;flex-direction:column;gap:12px;position:relative;z-index:3}
+.acard{background:var(--card);border:1.5px solid var(--brd);border-left:4px solid var(--green2);border-radius:12px;padding:12px 15px;box-shadow:var(--shadow)}
+.acard .ah{display:flex;align-items:center;gap:10px;margin-bottom:4px}
+.acard .ab{width:26px;height:26px;flex:0 0 auto;background:var(--greenL);color:var(--green);border-radius:50%;font-family:var(--mono);font-weight:600;font-size:.82rem;display:grid;place-items:center;border:1.5px solid var(--brd)}
+.acard h4{font-size:.98rem;color:var(--greenD)}
+.acard p{font-size:.88rem;color:var(--muted)}
+.acard.key{border-left-color:var(--gold2);background:var(--goldL)}
+.acard.key .ab{background:#fff;color:var(--gold);border-color:var(--gold)}
+.acard.key h4{color:#5c4708}
+.pin{position:absolute;width:30px;height:30px;transform:translate(-50%,-50%);border-radius:50%;background:var(--green);color:#fff;border:2.5px solid #fff;box-shadow:0 2px 9px rgba(0,0,0,.45);font-family:var(--mono);font-weight:700;font-size:.86rem;display:grid;place-items:center;z-index:2}
+.pin.key{background:var(--gold2);color:#3a2c05}
+.pin::before{content:"";position:absolute;inset:-7px;border-radius:50%;border:2px solid var(--green);opacity:.55;animation:pulse 1.9s infinite}
+.pin.key::before{border-color:var(--gold2)}
+@keyframes pulse{0%{transform:scale(.75);opacity:.6}70%{transform:scale(1.55);opacity:0}100%{opacity:0}}
+.leaders{position:absolute;inset:0;width:100%;height:100%;pointer-events:none;z-index:1;overflow:visible}
+.leaders path{fill:none;stroke:var(--green2);stroke-width:2.2;stroke-dasharray:7 5;stroke-linecap:round}
+
+/* ---------- RESPONSIVE ---------- */
+@media(max-width:800px){
+  .annot{flex-direction:column}
+  .shotwrap,.cards{flex:1 1 100%;width:100%}
+  .leaders{display:none}
+  .acard{border-left-width:5px}
+}
+@media(max-width:880px){
+  .grid2{grid-template-columns:1fr}
+  .brand h1{font-size:1.15rem}
+  .topicband h2.titolo{font-size:1.42rem}
+}
+</style>
+</head>
+<body>
+
+<header class="top">
+  <div class="wrap">
+    <div class="brand">
+      <svg class="logo" viewBox="0 0 48 48" fill="none" aria-hidden="true">
+        <rect x="3" y="3" width="42" height="42" rx="11" fill="#fff" opacity=".12"/>
+        <rect x="9" y="13" width="20" height="26" rx="3" fill="#fff"/>
+        <rect x="13" y="18" width="12" height="2.4" rx="1.2" fill="#1B6B3A"/>
+        <rect x="13" y="23" width="12" height="2.4" rx="1.2" fill="#1B6B3A"/>
+        <rect x="13" y="28" width="8" height="2.4" rx="1.2" fill="#1B6B3A"/>
+        <path d="M30 9l9 9-3 3-9-9z" fill="#D4A017"/>
+        <path d="M27 12l9 9-13.5 13.5-9-9z" fill="#D4A017" opacity=".9"/>
+        <path d="M13.5 25.5l9 9L18 36l-6 1.5L13.5 31z" fill="#fff"/>
+        <path d="M22.5 34.5l-9-9-1.2 1.2 9 9z" fill="#0E4423" opacity=".4"/>
+      </svg>
+      <div>
+        <h1>Officina dei Prompt</h1>
+        <p>Costruisci il prompt perfetto per le infografiche di NotebookLM</p>
+      </div>
+    </div>
+    <div class="top-actions">
+      <button class="btn btn-ghost" id="btnInfoDoc" aria-label="Informazioni per i docenti">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 16v-4M12 8h.01"/></svg>
+        Docenti
+      </button>
+      <button class="btn btn-primary" id="btnArgomenti">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h13M3 12h9M3 18h13"/><path d="M18 9l3 3-3 3"/></svg>
+        Argomenti
+      </button>
+    </div>
+  </div>
+</header>
+
+<main class="wrap">
+
+  <!-- TUTORIAL NOTEBOOKLM -->
+  <details class="panel guida intro" id="tutorial" open>
+    <summary class="guida-head">
+      <span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="#1B6B3A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><path d="M8 21h8M12 17v4"/><path d="M10 8l4 2.5-4 2.5z" fill="#1B6B3A"/></svg></span>
+      <span class="tt">
+        <h2>Come si usa NotebookLM</h2>
+        <span class="sub">Guida visiva in 6 passi: dalle fonti all'infografica scaricata</span>
+      </span>
+      <span class="chev"><svg viewBox="0 0 24 24" fill="none" stroke="#4A6B4A" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg></span>
+    </summary>
+    <div class="guida-body">
+      <p class="tut-lead">NotebookLM trasforma le tue fonti (testi, PDF, video) in mappe, quiz e <b style="color:var(--greenD)">infografiche</b>. Ecco il percorso completo: i numeri sulle schermate corrispondono alle spiegazioni accanto.</p>
+      <div id="tutBody"></div>
+    </div>
+  </details>
+
+  <!-- GUIDA -->
+  <details class="panel guida intro" id="guida">
+    <summary class="guida-head">
+      <span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="#1B6B3A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg></span>
+      <span class="tt">
+        <h2>Come si scrive un prompt per un'infografica</h2>
+        <span class="sub">Apri la guida: l'anatomia del prompt, i 50 stili e i temi cromatici</span>
+      </span>
+      <span class="chev"><svg viewBox="0 0 24 24" fill="none" stroke="#4A6B4A" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg></span>
+    </summary>
+    <div class="guida-body">
+      <p style="color:var(--muted);font-size:.96rem;margin-bottom:14px">Un buon prompt non è una frase generica: è un <b style="color:var(--greenD)">elenco di istruzioni precise</b>. NotebookLM trasforma in grafica solo ciò che gli dici con chiarezza. Ecco i sei mattoni:</p>
+      <div class="anatomia">
+        <div class="step"><span class="n">1 · AZIONE</span><h4>Che cosa fare</h4><p>«Crea un'infografica didattica in formato orizzontale».</p></div>
+        <div class="step"><span class="n">2 · ARGOMENTO</span><h4>Il tema</h4><p>L'argomento preciso, non vago: «la Prima guerra mondiale».</p></div>
+        <div class="step"><span class="n">3 · CONTENUTI</span><h4>I concetti chiave</h4><p>Le parole/frasi più importanti che scegli di evidenziare: sono il cuore.</p></div>
+        <div class="step"><span class="n">4 · STILE</span><h4>L'aspetto grafico</h4><p>Uno dei 50 stili, scritto col nome esatto: «Chalkboard Style».</p></div>
+        <div class="step"><span class="n">5 · TEMA</span><h4>I colori</h4><p>La palette: «colori vivaci», «tonalità pastello», «monocromatico».</p></div>
+        <div class="step"><span class="n">6 · PUBBLICO</span><h4>Per chi</h4><p>«Studenti di terza media (13-14 anni)», tono e densità.</p></div>
+      </div>
+      <div class="tip">
+        <svg viewBox="0 0 24 24" fill="none" stroke="#B8860B" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2a7 7 0 0 0-4 12.7V17h8v-2.3A7 7 0 0 0 12 2z"/><path d="M9 21h6M10 17v4M14 17v4"/></svg>
+        <p><b>Strategia.</b> In NotebookLM hai circa <b>15 tentativi al giorno</b>: non sprecarli a caso. Scegli prima lo stile dalla galleria, scrivi un prompt completo e solo poi genera. Meno tentativi, risultati migliori.</p>
+      </div>
+      <div style="margin-top:14px;display:flex;gap:10px;flex-wrap:wrap">
+        <button class="btn btn-ghost" style="background:var(--greenL);color:var(--green2);border-color:var(--brd2)" id="btnStyleGuide">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/></svg>
+          Sfoglia i 50 stili
+        </button>
+        <button class="btn btn-ghost" style="background:var(--goldL);color:#5c4708;border-color:var(--gold)" id="btnTemiGuide">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="13.5" cy="6.5" r="2.5"/><circle cx="17.5" cy="13" r="2.5"/><circle cx="9" cy="17" r="2.5"/><path d="M12 2a10 10 0 1 0 0 20c1.5 0 2-1 2-2s-.5-1.5-.5-2.5 1-1.5 2-1.5h1.5A4.5 4.5 0 0 0 22 11 10 10 0 0 0 12 2z"/></svg>
+          Temi cromatici
+        </button>
+      </div>
+    </div>
+  </details>
+
+  <!-- TOPIC BAND -->
+  <section class="topicband" id="topicband" aria-live="polite">
+    <div class="meta">
+      <span class="disc-badge" id="discBadge" style="display:none"></span>
+      <h2 class="titolo" id="topicTitle">Premi «Argomenti» per iniziare</h2>
+      <p class="empty-hint" id="emptyHint">Ti capiterà a sorte uno tra 50 argomenti di terza media. Da lì costruirai i tuoi due testi: prima il testo-fonte, poi il prompt.</p>
+      <div class="kw-row" id="kwRow"></div>
+    </div>
+    <div class="counter" id="counter" style="display:none"></div>
+  </section>
+
+  <!-- TWO STEPS -->
+  <section class="grid2" id="grid2" style="display:none">
+    <!-- STEP 1: TESTO-FONTE -->
+    <div class="cardbox">
+      <div class="cardbox-h">
+        <span class="stepnum">1</span>
+        <h3>Il testo per le «Fonti»</h3>
+        <span class="hint">scrivilo tu</span>
+      </div>
+      <div class="cardbox-b">
+        <div class="sel-help">
+          <svg viewBox="0 0 24 24" fill="none" stroke="#1B6B3A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4z"/></svg>
+          <p><b>Cosa fare:</b> leggi il <b>testo di riferimento</b> qui sotto e <b>riscrivilo con parole tue</b> nel box. Non copiarlo: riscriverlo ti aiuta a capirlo davvero. Questo testo lo incollerai poi nelle <b>«Fonti»</b> di NotebookLM: è il contenuto da cui nascerà l'infografica.</p>
+        </div>
+        <div class="reflab">
+          <svg viewBox="0 0 24 24" fill="none" stroke="#1B6B3A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>
+          Testo di riferimento &mdash; leggilo e riscrivilo con parole tue
+        </div>
+        <div class="fonteref" id="fonteRef"></div>
+        <div class="outwrap">
+          <div class="outh">
+            <h4><svg viewBox="0 0 24 24" fill="none" stroke="#1B6B3A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 5a2 2 0 0 1 2-2h9l5 5v11a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2z"/><path d="M14 3v5h5M8 13h8M8 17h6"/></svg> Testo-fonte (lo scrivi tu)</h4>
+            <div class="out-actions">
+              <span class="charcount" id="fonteCount">0 caratteri</span>
+              <span class="copied-flash" id="copiedFlashFonte">Copiato!</span>
+              <button class="mini mini-ghost" id="btnResetFonte" type="button">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12a9 9 0 1 0 3-6.7L3 8"/><path d="M3 3v5h5"/></svg>
+                Svuota
+              </button>
+              <button class="mini mini-gold" id="btnCopyFonte" type="button">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="11" height="11" rx="2"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/></svg>
+                Copia testo
+              </button>
+            </div>
+          </div>
+          <textarea id="fonteOut" spellcheck="true" aria-label="Testo-fonte" placeholder="Scrivi qui, con parole tue, la spiegazione dell'argomento. Tratta tutti i punti chiave: definizioni, esempi, date, cause e conseguenze…"></textarea>
+        </div>
+      </div>
+    </div>
+
+    <!-- STEP 2: PROMPT -->
+    <div class="cardbox">
+      <div class="cardbox-h">
+        <span class="stepnum">2</span>
+        <h3>Il prompt per l'infografica</h3>
+        <span class="hint">componi qui</span>
+      </div>
+      <div class="cardbox-b">
+        <div class="sel-help">
+          <svg viewBox="0 0 24 24" fill="none" stroke="#1B6B3A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 17l6-6-6-6M12 19h8"/></svg>
+          <p><b>Attenzione:</b> il prompt <b>non è il contenuto</b>, è l'<b>istruzione</b> che dice a NotebookLM <b>come</b> disegnare l'infografica. Scegli i concetti da evidenziare e l'aspetto grafico: il prompt si comporrà qui sotto, e resta <b>vuoto</b> finché non aggiungi un concetto.</p>
+        </div>
+        <label class="kwlab">Concetti chiave da evidenziare</label>
+        <div class="concept-tools" id="kwConcept"></div>
+        <button class="btn-addsel" id="btnAddSel" type="button">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg>
+          Aggiungi la frase selezionata nel testo-fonte
+        </button>
+        <div class="dropzone" id="dropzone">
+          <span class="placeholder">Clicca una parola chiave qui sopra, oppure seleziona una frase nel testo-fonte e premi «Aggiungi»&hellip;</span>
+        </div>
+
+        <div class="controls">
+          <div class="ctrl">
+            <label for="selStyle">Stile grafico</label>
+            <div class="style-pick">
+              <select id="selStyle"></select>
+              <button id="btnStyleGallery2" type="button" aria-label="Apri galleria stili">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/></svg>
+                Galleria
+              </button>
+            </div>
+            <div class="style-desc" id="styleDesc"></div>
+          </div>
+
+          <div class="ctrl">
+            <label for="selTema">Tema cromatico</label>
+            <select id="selTema"></select>
+          </div>
+
+          <div class="ctrl">
+            <label>Densità delle informazioni</label>
+            <div class="seg" id="segDensita" role="group"></div>
+          </div>
+
+          <div class="ctrl">
+            <label>Tono</label>
+            <div class="seg" id="segTono" role="group"></div>
+          </div>
+        </div>
+
+        <div class="outwrap">
+          <div class="outh">
+            <h4><svg viewBox="0 0 24 24" fill="none" stroke="#1B6B3A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 17l6-6-6-6M12 19h8"/></svg> Prompt da incollare in NotebookLM</h4>
+            <div class="out-actions">
+              <span class="copied-flash" id="copiedFlash">Copiato!</span>
+              <button class="mini mini-ghost" id="btnReset" type="button">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12a9 9 0 1 0 3-6.7L3 8"/><path d="M3 3v5h5"/></svg>
+                Svuota
+              </button>
+              <button class="mini mini-gold" id="btnCopy" type="button">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="11" height="11" rx="2"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/></svg>
+                Copia prompt
+              </button>
+            </div>
+          </div>
+          <textarea id="promptOut" spellcheck="false" aria-label="Prompt generato"></textarea>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <span>Officina dei Prompt &middot; Educazione all'IA</span>
+  <span class="sep">|</span>
+  <span>Andrea Cerioli &middot; Animatore Digitale</span>
+  <span class="sep">|</span>
+  <span>Scuola Sacra Famiglia &middot; Orzinuovi (BS)</span>
+</footer>
+
+<!-- MODAL: galleria stili -->
+<div class="modal-bg" id="modalStyle">
+  <div class="modal" role="dialog" aria-modal="true" aria-labelledby="msTitle">
+    <div class="modal-h">
+      <span class="ic" style="width:38px;height:38px;background:var(--greenL);border-radius:10px;display:grid;place-items:center"><svg viewBox="0 0 24 24" fill="none" stroke="#1B6B3A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:21px;height:21px"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/></svg></span>
+      <h3 id="msTitle">I 50 stili di NotebookLM</h3>
+      <button class="x" data-close aria-label="Chiudi"><svg viewBox="0 0 24 24" fill="none" stroke="#4A6B4A" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 6l12 12M18 6L6 18"/></svg></button>
+    </div>
+    <div class="modal-b">
+      <input class="style-search" id="styleSearch" type="text" placeholder="Cerca uno stile (es. lavagna, fumetto, acquarello)&hellip;" aria-label="Cerca stile">
+      <p style="font-size:.88rem;color:var(--muted);margin-bottom:4px">Clicca uno stile per inserirlo nel prompt. Per la didattica i più chiari sono in cima.</p>
+      <div id="styleGalleryBody"></div>
+    </div>
+  </div>
+</div>
+
+<!-- MODAL: temi -->
+<div class="modal-bg" id="modalTema">
+  <div class="modal" role="dialog" aria-modal="true" aria-labelledby="mtTitle">
+    <div class="modal-h">
+      <span class="ic" style="width:38px;height:38px;background:var(--goldL);border-radius:10px;display:grid;place-items:center"><svg viewBox="0 0 24 24" fill="none" stroke="#B8860B" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:21px;height:21px"><circle cx="13.5" cy="6.5" r="2.5"/><circle cx="17.5" cy="13" r="2.5"/><circle cx="9" cy="17" r="2.5"/><path d="M12 2a10 10 0 1 0 0 20c1.5 0 2-1 2-2s-.5-1.5-.5-2.5 1-1.5 2-1.5h1.5A4.5 4.5 0 0 0 22 11 10 10 0 0 0 12 2z"/></svg></span>
+      <h3 id="mtTitle">Temi cromatici</h3>
+      <button class="x" data-close aria-label="Chiudi"><svg viewBox="0 0 24 24" fill="none" stroke="#4A6B4A" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 6l12 12M18 6L6 18"/></svg></button>
+    </div>
+    <div class="modal-b">
+      <p style="font-size:.92rem;color:var(--muted);margin-bottom:6px">Il <b style="color:var(--greenD)">tema cromatico</b> dà l'atmosfera all'infografica. Clicca per inserirlo nel prompt.</p>
+      <div class="tema-grid" id="temaGalleryBody"></div>
+    </div>
+  </div>
+</div>
+
+<!-- MODAL: info docenti -->
+<div class="modal-bg" id="modalDoc">
+  <div class="modal" role="dialog" aria-modal="true" aria-labelledby="mdTitle">
+    <div class="modal-h">
+      <span class="ic" style="width:38px;height:38px;background:var(--greenL);border-radius:10px;display:grid;place-items:center"><svg viewBox="0 0 24 24" fill="none" stroke="#1B6B3A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:21px;height:21px"><path d="M22 10L12 5 2 10l10 5 10-5z"/><path d="M6 12v5c0 1 2.7 3 6 3s6-2 6-3v-5"/></svg></span>
+      <h3 id="mdTitle">Per i docenti</h3>
+      <button class="x" data-close aria-label="Chiudi"><svg viewBox="0 0 24 24" fill="none" stroke="#4A6B4A" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 6l12 12M18 6L6 18"/></svg></button>
+    </div>
+    <div class="modal-b idoc">
+      <h4>Obiettivo didattico</h4>
+      <p>Imparare a <b>scrivere il prompt</b> per generare infografiche didattiche efficaci con NotebookLM. Il fuoco non è il software, ma il <b>linguaggio del prompt</b>: scegliere l'argomento, isolare i concetti chiave, definire stile, colori e pubblico.</p>
+      <h4>Come funziona l'attività (due step)</h4>
+      <ul>
+        <li>Lo studente preme <b>Argomenti</b> e riceve a sorte uno tra 50 temi di terza media (multidisciplinari), con i <b>punti chiave</b> come traccia.</li>
+        <li><b>Step 1 — il testo-fonte:</b> scrive lui, con parole sue, il <b>contenuto</b> da incollare nelle «Fonti» di NotebookLM. I punti chiave si spuntano da soli man mano che li tratta. Niente testo pre-scritto da copiare.</li>
+        <li><b>Step 2 — il prompt:</b> sceglie i <b>concetti da evidenziare</b> (cliccando le parole chiave o selezionando frasi dal proprio testo-fonte) e definisce stile, tema, densità e tono. Il prompt resta <b>vuoto</b> finché non aggiunge un concetto.</li>
+        <li>Con <b>Copia testo</b> e <b>Copia prompt</b> porta i due testi in NotebookLM e genera (poi scarica) l'infografica — passaggio supervisionato dall'adulto.</li>
+      </ul>
+      <h4>Cornice pedagogica</h4>
+      <ul>
+        <li><b>Vygotskij — scaffolding:</b> traccia dei punti chiave, checklist e controlli guidano chi «non sa cosa scrivere», senza fornire la risposta.</li>
+        <li><b>Dewey — learning by doing:</b> si impara scrivendo la fonte e costruendo il prompt, non leggendo una regola.</li>
+        <li><b>Bruner — per scoperta:</b> distinguere il <b>contenuto</b> (fonte) dall'<b>istruzione</b> (prompt) è il nodo concettuale da scoprire.</li>
+        <li><b>Metacognizione:</b> «cosa serve a NotebookLM per disegnare? e cosa decido io?».</li>
+      </ul>
+      <h4>Uso responsabile dell'IA (under 14)</h4>
+      <p>I campi partono <b>vuoti</b>: lo studente <b>non copia un testo già pronto</b>, ma produce lui il contenuto e la struttura. Così non delega all'IA il pensiero. La generazione finale dell'immagine avviene con la supervisione del docente: è il principio del «ponte manuale verso l'IA».</p>
+      <div class="tagline">
+        <span class="tag">Cittadinanza Digitale</span>
+        <span class="tag">AI Literacy</span>
+        <span class="tag">Pensiero critico</span>
+        <span class="tag">Metacognizione</span>
+        <span class="tag">Scrittura del prompt</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+/* ============ DATI: 50 ARGOMENTI ============ */
+const TOPICS = [
+{d:"Storia",t:"La Prima guerra mondiale",k:["trincea","guerra di logoramento","attentato di Sarajevo","Triplice Intesa","Triplice Alleanza","fronte"],
+s:`<p><span class="lead">Tra il 1914 e il 1918</span> l'Europa fu travolta dalla Prima guerra mondiale, scatenata dall'attentato di Sarajevo in cui fu ucciso l'arciduca Francesco Ferdinando. Da una parte la Triplice Intesa (Francia, Regno Unito, Russia), dall'altra gli Imperi centrali della Triplice Alleanza.</p><p>Fu una guerra di trincea e di logoramento, combattuta su un fronte immobile per mesi. Comparvero armi nuove come mitragliatrici, gas asfissianti, carri armati e aerei. L'Italia entrò nel 1915 con il Patto di Londra. Milioni di morti e la fine di quattro imperi cambiarono per sempre il volto del Novecento.</p>`},
+{d:"Storia",t:"La Seconda guerra mondiale",k:["blitzkrieg","Asse","Alleati","sbarco in Normandia","resistenza","bomba atomica"],
+s:`<p><span class="lead">Dal 1939 al 1945</span> il mondo intero fu coinvolto nel conflitto più devastante della storia. La Germania nazista di Hitler invase la Polonia con la tattica della blitzkrieg, la "guerra lampo". Si fronteggiarono le potenze dell'Asse (Germania, Italia, Giappone) e gli Alleati (Regno Unito, USA, URSS).</p><p>Lo sbarco in Normandia del 1944 aprì il fronte occidentale, mentre la resistenza partigiana combatteva l'occupazione. La guerra finì con la resa della Germania e con le bombe atomiche su Hiroshima e Nagasaki. Sei anni di guerra totale lasciarono oltre cinquanta milioni di morti.</p>`},
+{d:"Storia",t:"La Shoah",k:["leggi razziali","deportazione","campi di sterminio","Auschwitz","genocidio","Giornata della Memoria"],
+s:`<p><span class="lead">La Shoah</span> fu lo sterminio sistematico di sei milioni di ebrei europei progettato dalla Germania nazista. Tutto iniziò con le leggi razziali, che tolsero diritti, lavoro e dignità, separando gli ebrei dal resto della società.</p><p>Seguirono la deportazione di massa e la reclusione nei campi di sterminio come Auschwitz, dove milioni di persone furono uccise nelle camere a gas. Fu un genocidio pianificato a tavolino, una delle pagine più buie dell'umanità. Oggi la Giornata della Memoria, il 27 gennaio, ricorda le vittime perché simili orrori non si ripetano mai più.</p>`},
+{d:"Storia",t:"La Rivoluzione russa",k:["zar","bolscevichi","Lenin","soviet","comunismo","Unione Sovietica"],
+s:`<p><span class="lead">Nel 1917</span> la Russia, stremata dalla guerra e dalla miseria, rovesciò lo zar Nicola II. In ottobre i bolscevichi guidati da Lenin presero il potere con la promessa di "pace, pane e terra".</p><p>Nacquero i soviet, i consigli di operai e contadini, e prese forma il primo Stato fondato sul comunismo. Dopo una dura guerra civile nacque l'Unione Sovietica. La proprietà privata fu abolita e l'economia passò sotto il controllo dello Stato. Fu un evento che divise il mondo del Novecento in due blocchi contrapposti.</p>`},
+{d:"Storia",t:"Il Fascismo",k:["Mussolini","marcia su Roma","dittatura","propaganda","squadrismo","regime totalitario"],
+s:`<p><span class="lead">Il Fascismo</span> nacque in Italia dopo la Prima guerra mondiale, in un clima di crisi economica e paura del comunismo. Benito Mussolini conquistò il potere nel 1922 con la marcia su Roma.</p><p>In pochi anni trasformò lo Stato in una dittatura: soppresse i partiti, controllò la stampa e usò la propaganda per costruire il consenso. Lo squadrismo intimidiva gli oppositori con la violenza. Il regime totalitario voleva controllare ogni aspetto della vita, dalla scuola al tempo libero, con il motto "credere, obbedire, combattere".</p>`},
+{d:"Storia",t:"Il Nazismo",k:["Hitler","Terzo Reich","razzismo","spazio vitale","propaganda","antisemitismo"],
+s:`<p><span class="lead">Il Nazismo</span> fu il regime instaurato in Germania da Adolf Hitler a partire dal 1933. Approfittando della crisi economica e dell'umiliazione del dopoguerra, il partito nazista promise grandezza e ordine.</p><p>Al centro dell'ideologia c'erano un feroce razzismo e l'antisemitismo, l'odio verso gli ebrei. Hitler costruì il Terzo Reich come dittatura totalitaria, eliminando ogni opposizione e usando una propaganda capillare. La teoria dello "spazio vitale" giustificava l'espansione militare verso est e portò il mondo verso la Seconda guerra mondiale.</p>`},
+{d:"Storia",t:"La Guerra fredda",k:["due blocchi","USA e URSS","cortina di ferro","corsa agli armamenti","corsa allo spazio","equilibrio del terrore"],
+s:`<p><span class="lead">Dopo il 1945</span> il mondo si divise in due blocchi contrapposti: a ovest gli USA e il modello capitalista, a est l'URSS e il modello comunista. Fu la Guerra fredda, un conflitto mai combattuto direttamente ma fatto di tensione continua.</p><p>L'Europa fu tagliata in due dalla cortina di ferro. Ci furono la corsa agli armamenti nucleari e la corsa allo spazio, fino allo sbarco sulla Luna. Crisi come quella di Cuba portarono il mondo sull'orlo della guerra atomica, nel cosiddetto equilibrio del terrore. Durò oltre quarant'anni, fino al crollo del comunismo.</p>`},
+{d:"Storia",t:"La caduta del Muro di Berlino",k:["1989","Germania divisa","crollo del comunismo","libertà","riunificazione","fine della Guerra fredda"],
+s:`<p><span class="lead">Il 9 novembre 1989</span> cadde il Muro di Berlino, costruito nel 1961 per dividere la città e impedire la fuga verso ovest. Per ventotto anni aveva separato famiglie e simboleggiato la Germania divisa.</p><p>La folla lo abbatté a mani nude, in una notte di festa e libertà. Fu il segnale del crollo del comunismo in tutta l'Europa dell'est. Seguì la riunificazione della Germania e, nel 1991, la fine della Guerra fredda con la dissoluzione dell'Unione Sovietica. Il mondo bipolare era finito.</p>`},
+{d:"Geografia",t:"La globalizzazione",k:["interconnessione","commercio mondiale","multinazionali","delocalizzazione","villaggio globale","disuguaglianze"],
+s:`<p><span class="lead">La globalizzazione</span> è il processo che rende il mondo sempre più interconnesso: merci, persone, denaro e informazioni si spostano rapidamente da un capo all'altro del pianeta. Il commercio mondiale collega economie lontanissime.</p><p>Le grandi multinazionali producono dove costa meno, con la delocalizzazione delle fabbriche. Internet ha creato un vero "villaggio globale" in cui le notizie viaggiano in tempo reale. Ma la globalizzazione aumenta anche le disuguaglianze: alcuni Paesi si arricchiscono, altri restano sfruttati. È un fenomeno con grandi opportunità e gravi contraddizioni.</p>`},
+{d:"Geografia",t:"Lo sviluppo sostenibile",k:["Agenda 2030","risorse rinnovabili","impronta ecologica","generazioni future","economia circolare","equità"],
+s:`<p><span class="lead">Lo sviluppo sostenibile</span> è una crescita che soddisfa i bisogni di oggi senza compromettere quelli delle generazioni future. Significa usare le risorse rinnovabili senza esaurirle e ridurre la nostra impronta ecologica sul pianeta.</p><p>L'ONU ha fissato gli obiettivi dell'Agenda 2030: sconfiggere la povertà, garantire energia pulita, proteggere mari e foreste. L'economia circolare propone di riusare e riciclare invece di buttare. Sostenibilità non è solo ambiente: è anche equità sociale, perché un mondo più giusto è anche un mondo più stabile. Le scelte di ognuno contano.</p>`},
+{d:"Geografia",t:"Gli squilibri Nord-Sud del mondo",k:["Paesi ricchi e poveri","sottosviluppo","debito","migrazioni","accesso all'acqua","commercio equo"],
+s:`<p><span class="lead">Il pianeta</span> è diviso da profondi squilibri tra il Nord ricco e industrializzato e il Sud del mondo, dove molti Paesi vivono nel sottosviluppo. La ricchezza è distribuita in modo profondamente ineguale.</p><p>Molti Paesi poveri sono schiacciati dal debito verso le nazioni ricche e dipendono dall'esportazione di poche materie prime. Mancano scuole, ospedali e talvolta perfino l'accesso all'acqua potabile. Queste differenze spingono le migrazioni verso il Nord. Il commercio equo e solidale prova a costruire scambi più giusti, pagando il giusto prezzo ai produttori.</p>`},
+{d:"Geografia",t:"Il cambiamento climatico",k:["effetto serra","gas serra","riscaldamento globale","scioglimento dei ghiacci","eventi estremi","transizione ecologica"],
+s:`<p><span class="lead">Il cambiamento climatico</span> è l'aumento della temperatura media della Terra causato dalle attività umane. Bruciando carbone, petrolio e gas immettiamo nell'atmosfera gas serra come l'anidride carbonica, che intensificano l'effetto serra.</p><p>Il risultato è il riscaldamento globale: lo scioglimento dei ghiacciai, l'innalzamento dei mari ed eventi estremi sempre più frequenti, come siccità, alluvioni e ondate di calore. Per fermarlo serve una transizione ecologica verso le energie rinnovabili e stili di vita meno inquinanti. È la sfida più importante per il futuro della nostra generazione.</p>`},
+{d:"Geografia",t:"L'urbanizzazione e le megalopoli",k:["città","megalopoli","esodo rurale","periferie","smog","città sostenibili"],
+s:`<p><span class="lead">Oggi</span> più della metà dell'umanità vive nelle città. L'urbanizzazione è la crescita rapida dei centri urbani, alimentata dall'esodo rurale di chi lascia le campagne in cerca di lavoro e servizi.</p><p>Nascono così le megalopoli, agglomerati di milioni di abitanti come Tokyo, Città del Messico o Mumbai. La crescita rapida crea problemi: periferie sovraffollate, traffico, smog e mancanza di alloggi. La sfida del futuro sono le città sostenibili, con trasporti puliti, verde urbano ed edifici a basso consumo, capaci di offrire una buona qualità della vita a tutti.</p>`},
+{d:"Scienze",t:"Il DNA e la genetica",k:["doppia elica","geni","cromosomi","ereditarietà","mutazioni","codice genetico"],
+s:`<p><span class="lead">Il DNA</span> è la molecola che contiene le istruzioni per costruire e far funzionare ogni essere vivente. Ha la forma di una doppia elica, una sorta di scala a chiocciola racchiusa nel nucleo delle cellule.</p><p>Lungo il DNA si trovano i geni, i "capitoli" che determinano i nostri caratteri, raccolti nei cromosomi. La genetica studia l'ereditarietà, cioè come i caratteri passano dai genitori ai figli, come scoprì Mendel. A volte avvengono mutazioni, errori nel codice genetico che possono essere dannosi, neutri o utili all'evoluzione. Il DNA è il linguaggio segreto della vita.</p>`},
+{d:"Scienze",t:"Il sistema nervoso",k:["neuroni","cervello","midollo spinale","impulso elettrico","sinapsi","riflessi"],
+s:`<p><span class="lead">Il sistema nervoso</span> è la rete che controlla e coordina tutto il corpo. È formato da miliardi di cellule specializzate, i neuroni, capaci di trasmettere informazioni a grande velocità.</p><p>Il centro di comando è l'encefalo, in particolare il cervello, collegato al resto del corpo tramite il midollo spinale e i nervi. Le informazioni viaggiano come impulso elettrico e passano da un neurone all'altro attraverso le sinapsi. Alcune risposte, come i riflessi, sono automatiche e velocissime. Grazie al sistema nervoso pensiamo, ci muoviamo, proviamo emozioni e percepiamo il mondo.</p>`},
+{d:"Scienze",t:"L'evoluzione di Darwin",k:["selezione naturale","adattamento","specie","lotta per la sopravvivenza","antenato comune","variabilità"],
+s:`<p><span class="lead">Charles Darwin</span> spiegò come gli esseri viventi cambiano nel tempo con la teoria dell'evoluzione. In ogni specie esiste una variabilità: gli individui non sono tutti uguali.</p><p>Nella lotta per la sopravvivenza, gli organismi meglio adatti all'ambiente hanno più probabilità di sopravvivere e riprodursi: è la selezione naturale. Così, generazione dopo generazione, le specie si trasformano attraverso l'adattamento. Tutti i viventi discendono da un antenato comune in un grande albero della vita. Darwin osservò questi fenomeni durante il viaggio sulla nave Beagle, soprattutto alle isole Galápagos.</p>`},
+{d:"Scienze",t:"La tettonica delle placche",k:["placche","deriva dei continenti","faglie","terremoti","vulcani","dorsali oceaniche"],
+s:`<p><span class="lead">La crosta terrestre</span> non è un guscio unico, ma è divisa in enormi placche che galleggiano e si muovono lentissimamente sul mantello caldo sottostante. È la teoria della tettonica delle placche.</p><p>Questo movimento spiega la deriva dei continenti, intuita da Wegener: milioni di anni fa le terre emerse erano unite in un unico supercontinente. Dove le placche si scontrano o scivolano lungo le faglie nascono i terremoti; dove si separano lungo le dorsali oceaniche o si immergono si formano i vulcani. La Terra, sotto i nostri piedi, è in continuo movimento.</p>`},
+{d:"Scienze",t:"I vulcani e i terremoti",k:["magma","eruzione","cratere","onde sismiche","epicentro","scala Richter"],
+s:`<p><span class="lead">Vulcani e terremoti</span> sono i segni più potenti dell'attività interna della Terra. Un vulcano è un'apertura da cui risale il magma, la roccia fusa che si trova in profondità.</p><p>Durante un'eruzione, dal cratere escono lava, gas e ceneri. I terremoti sono invece improvvise scosse del terreno, causate dalla rottura delle rocce lungo le faglie. L'energia si propaga come onde sismiche a partire da un punto interno, l'ipocentro, sotto l'epicentro in superficie. La forza di un terremoto si misura con la scala Richter. Studiarli serve a difendere le persone con costruzioni più sicure.</p>`},
+{d:"Scienze",t:"Il Sistema solare",k:["Sole","pianeti","orbita","gravità","asteroidi","anni luce"],
+s:`<p><span class="lead">Il Sistema solare</span> è la famiglia di corpi celesti che ruota attorno al Sole, una stella di medie dimensioni. Otto pianeti percorrono la loro orbita tenuti insieme dalla forza di gravità.</p><p>I pianeti rocciosi più vicini al Sole sono Mercurio, Venere, Terra e Marte; più lontani ci sono i giganti gassosi Giove, Saturno, Urano e Nettuno. Tra Marte e Giove orbitano migliaia di asteroidi. Le distanze nello spazio sono enormi e si misurano in anni luce. Il Sistema solare è solo un piccolo angolo della nostra galassia, la Via Lattea.</p>`},
+{d:"Scienze",t:"L'apparato riproduttore e la pubertà",k:["pubertà","ormoni","cellule riproduttive","fecondazione","caratteri sessuali","cambiamenti del corpo"],
+s:`<p><span class="lead">La pubertà</span> è il periodo in cui il corpo si trasforma da bambino ad adulto. A guidare questi cambiamenti sono gli ormoni, messaggeri chimici prodotti dal corpo.</p><p>L'apparato riproduttore matura e inizia a produrre le cellule riproduttive: gli spermatozoi nei maschi e le cellule uovo nelle femmine. Compaiono i caratteri sessuali secondari, come la crescita di peli e lo sviluppo del corpo. La fecondazione, cioè l'incontro tra una cellula uovo e uno spermatozoo, può dare inizio a una nuova vita. È una fase naturale di crescita, fatta di cambiamenti fisici ed emotivi.</p>`},
+{d:"Scienze",t:"L'energia e le sue forme",k:["energia cinetica","energia potenziale","trasformazione","conservazione","fonti rinnovabili","calore"],
+s:`<p><span class="lead">L'energia</span> è la capacità di compiere un lavoro, cioè di produrre un cambiamento. Esiste in molte forme: l'energia cinetica del movimento, l'energia potenziale immagazzinata, e poi quella termica, elettrica, chimica e luminosa.</p><p>La caratteristica più importante è la trasformazione: l'energia passa continuamente da una forma all'altra. Una diga trasforma l'energia potenziale dell'acqua in elettricità. Secondo il principio di conservazione, l'energia non si crea né si distrugge, ma si trasforma. Una parte si disperde sempre come calore. Le fonti rinnovabili, come sole e vento, ci permettono di produrre energia senza esaurire le risorse.</p>`},
+{d:"Letteratura",t:"Giacomo Leopardi",k:["pessimismo","infinito","natura matrigna","ricordo","poesia","Canti"],
+s:`<p><span class="lead">Giacomo Leopardi</span> è uno dei più grandi poeti italiani, vissuto nell'Ottocento. Fin da ragazzo studiò moltissimo nella biblioteca del padre, a Recanati, rovinandosi la salute.</p><p>La sua visione della vita è segnata dal pessimismo: l'uomo cerca la felicità ma non la trova mai, e la natura, un tempo amica, diventa una natura matrigna, indifferente alle nostre sofferenze. Nelle sue poesie, raccolte nei Canti, danno voce al desiderio di infinito e alla dolcezza del ricordo, come nella celebre lirica "L'infinito". La sua poesia trasforma il dolore in bellezza universale.</p>`},
+{d:"Letteratura",t:"Giovanni Verga e il Verismo",k:["Verismo","realtà","vinti","Sicilia","narratore impersonale","I Malavoglia"],
+s:`<p><span class="lead">Giovanni Verga</span> è il maggiore scrittore del Verismo, la corrente che voleva rappresentare la realtà così com'è, senza abbellimenti. Ambientò le sue opere nella Sicilia povera dei pescatori e dei contadini.</p><p>Verga raccontò la vita dei vinti, gli umili sconfitti dalla miseria e dal destino, come la famiglia di pescatori del romanzo "I Malavoglia". Usò la tecnica del narratore impersonale: l'autore scompare e sembra che siano i personaggi stessi a parlare, con il loro linguaggio. La sua scrittura asciutta e vera diede dignità letteraria al mondo degli ultimi.</p>`},
+{d:"Letteratura",t:"Giovanni Pascoli",k:["fanciullino","simboli","natura","nido familiare","onomatopee","Myricae"],
+s:`<p><span class="lead">Giovanni Pascoli</span> visse un'infanzia segnata dal dolore per l'uccisione del padre. Questo lutto lasciò un segno profondo nella sua poesia, fatta di tenerezza e malinconia.</p><p>Secondo la sua teoria del fanciullino, dentro ogni adulto vive un bambino capace di stupirsi e di vedere la poesia nelle piccole cose. Pascoli osserva la natura con occhi nuovi, usando simboli e suoni: le sue onomatopee imitano il canto degli uccelli e i rumori della campagna. Il tema del nido familiare, rifugio sicuro contro un mondo ostile, ritorna spesso nella raccolta "Myricae".</p>`},
+{d:"Letteratura",t:"Giuseppe Ungaretti",k:["ermetismo","parola essenziale","guerra","versi brevi","analogia","L'Allegria"],
+s:`<p><span class="lead">Giuseppe Ungaretti</span> visse in prima persona l'orrore della Prima guerra mondiale, combattendo in trincea. Da quell'esperienza nacque una poesia nuova, raccolta nel libro "L'Allegria".</p><p>La sua è la poesia dell'ermetismo: usa la parola essenziale, spogliata di tutto il superfluo. I suoi versi brevi, a volte di una sola parola, sono come folgorazioni. Con l'analogia accosta immagini lontane per illuminare un significato nascosto. Di fronte alla guerra e alla morte, Ungaretti riscopre il valore fragile e prezioso della vita, come nella celebre poesia "Soldati": "Si sta come d'autunno sugli alberi le foglie".</p>`},
+{d:"Letteratura",t:"Eugenio Montale",k:["male di vivere","oggetti","correlativo oggettivo","aridità","Premio Nobel","Ossi di seppia"],
+s:`<p><span class="lead">Eugenio Montale</span> è uno dei massimi poeti del Novecento, premiato con il Premio Nobel per la letteratura. La sua prima raccolta, "Ossi di seppia", è ambientata nel paesaggio aspro e assolato della Liguria.</p><p>Al centro della sua poesia c'è il male di vivere, il senso di sofferenza e aridità che attraversa l'esistenza umana. Montale non lo spiega a parole, ma lo mostra attraverso gli oggetti e le immagini concrete: è la tecnica del correlativo oggettivo. Un muro, una conchiglia, un paesaggio bruciato dal sole diventano specchi dei sentimenti. La sua è una poesia onesta, che non offre facili consolazioni.</p>`},
+{d:"Letteratura",t:"Il Decadentismo",k:["estetismo","poeta veggente","simbolo","crisi","superuomo","fine Ottocento"],
+s:`<p><span class="lead">Il Decadentismo</span> è il movimento letterario di fine Ottocento che esprime la crisi delle certezze. Gli intellettuali non credono più nel progresso e nella scienza, e cercano nuove vie per conoscere il mondo.</p><p>Il poeta diventa un veggente, capace di cogliere i misteri nascosti dietro la realtà attraverso il simbolo. Nasce l'estetismo: il culto della bellezza e dell'arte come unico valore, incarnato in Italia da Gabriele D'Annunzio con la figura del superuomo, l'individuo eccezionale. È un'epoca di raffinatezza e inquietudine, che apre la strada alla poesia moderna del Novecento.</p>`},
+{d:"Matematica",t:"Il teorema di Pitagora",k:["triangolo rettangolo","cateti","ipotenusa","quadrato","area","dimostrazione"],
+s:`<p><span class="lead">Il teorema di Pitagora</span> è una delle scoperte più famose della matematica. Riguarda il triangolo rettangolo, cioè quello che ha un angolo retto di 90 gradi.</p><p>I due lati che formano l'angolo retto si chiamano cateti, mentre il lato più lungo, opposto all'angolo retto, è l'ipotenusa. Il teorema afferma che l'area del quadrato costruito sull'ipotenusa è uguale alla somma delle aree dei quadrati costruiti sui due cateti. In formula: il quadrato dell'ipotenusa è uguale alla somma dei quadrati dei cateti. Grazie alla sua dimostrazione possiamo calcolare un lato conoscendo gli altri due.</p>`},
+{d:"Matematica",t:"I numeri relativi",k:["numeri positivi","numeri negativi","valore assoluto","retta dei numeri","zero","operazioni con i segni"],
+s:`<p><span class="lead">I numeri relativi</span> sono i numeri dotati di segno: i numeri positivi, maggiori di zero, e i numeri negativi, minori di zero. Servono a descrivere situazioni opposte, come temperature sopra e sotto lo zero o crediti e debiti.</p><p>Si rappresentano sulla retta dei numeri: a destra dello zero i positivi, a sinistra i negativi. Il valore assoluto indica la distanza di un numero dallo zero, senza tenere conto del segno. Per fare le operazioni con i segni servono regole precise: per esempio, sommando due numeri negativi si ottiene un numero negativo. I numeri relativi ampliano enormemente il mondo dei calcoli.</p>`},
+{d:"Matematica",t:"Le equazioni di primo grado",k:["incognita","uguaglianza","primo membro","secondo membro","soluzione","principi di equivalenza"],
+s:`<p><span class="lead">Un'equazione</span> è un'uguaglianza tra due espressioni che contiene una lettera sconosciuta, l'incognita, di solito indicata con la x. Risolverla significa trovare il valore che la rende vera.</p><p>L'equazione ha un primo membro a sinistra e un secondo membro a destra del segno uguale, come i due piatti di una bilancia in equilibrio. Per trovare la soluzione si usano i principi di equivalenza: si può aggiungere, togliere, moltiplicare o dividere la stessa quantità da entrambi i membri, mantenendo l'equilibrio. Le equazioni sono uno strumento potentissimo per risolvere problemi della vita reale traducendoli in linguaggio matematico.</p>`},
+{d:"Matematica",t:"Probabilità e statistica",k:["evento","casi favorevoli","casi possibili","media","grafici","campione"],
+s:`<p><span class="lead">La probabilità</span> misura quanto è facile che accada un certo evento, con un numero compreso tra 0 (impossibile) e 1 (certo). Si calcola come rapporto tra i casi favorevoli e i casi possibili: lanciando un dado, la probabilità di ottenere un 6 è uno su sei.</p><p>La statistica, invece, raccoglie e analizza i dati per capire la realtà. Si studia un campione e si organizzano i risultati con tabelle e grafici come gli istogrammi. Indici come la media aiutano a riassumere tanti dati in un solo numero. Probabilità e statistica ci permettono di prendere decisioni ragionate anche quando c'è incertezza.</p>`},
+{d:"Matematica",t:"La geometria dei solidi",k:["facce","spigoli","vertici","volume","superficie","cubo e cilindro"],
+s:`<p><span class="lead">La geometria dei solidi</span> studia le figure a tre dimensioni, quelle che occupano spazio come gli oggetti reali. A differenza delle figure piane, i solidi hanno lunghezza, larghezza e altezza.</p><p>Ogni solido è delimitato da facce, che si incontrano lungo gli spigoli, i quali a loro volta si uniscono nei vertici. Tra i solidi più importanti ci sono i poliedri, come il cubo e la piramide, e i solidi di rotazione, come il cilindro, il cono e la sfera. Di un solido possiamo calcolare la superficie, cioè l'area che lo riveste, e il volume, lo spazio che racchiude al suo interno. La geometria solida ci aiuta a misurare il mondo che ci circonda.</p>`},
+{d:"Arte",t:"L'Impressionismo",k:["luce","pennellate","en plein air","attimo","colori puri","Monet"],
+s:`<p><span class="lead">L'Impressionismo</span> nacque a Parigi nella seconda metà dell'Ottocento e rivoluzionò il modo di dipingere. Gli artisti uscirono dagli studi per dipingere all'aperto, en plein air, davanti alla natura.</p><p>Il loro obiettivo era catturare la luce e l'attimo fuggente, l'impressione di un momento. Usavano pennellate rapide e visibili e colori puri accostati, da guardare a distanza. Claude Monet, con il celebre quadro "Impressione, levar del sole", diede il nome al movimento. Per la prima volta contava più la sensazione visiva che il disegno preciso. Fu l'inizio dell'arte moderna.</p>`},
+{d:"Arte",t:"L'Espressionismo",k:["emozioni","colori violenti","deformazione","angoscia","interiorità","Munch"],
+s:`<p><span class="lead">L'Espressionismo</span> nacque all'inizio del Novecento come reazione all'Impressionismo: non interessava più copiare la realtà esterna, ma esprimere le emozioni e l'interiorità dell'artista.</p><p>Per dare voce ai sentimenti, i pittori usavano colori violenti e innaturali e la deformazione delle figure. Il quadro diventa lo specchio dell'anima, spesso piena di angoscia e inquietudine. L'opera simbolo è "L'urlo" di Edvard Munch, in cui una figura deformata grida la sua disperazione sotto un cielo infuocato. L'Espressionismo trasforma il dolore e la paura dell'uomo moderno in immagini potenti e dirette.</p>`},
+{d:"Arte",t:"Il Cubismo",k:["scomposizione","punti di vista","forme geometriche","prospettiva","collage","Picasso"],
+s:`<p><span class="lead">Il Cubismo</span> fu inventato da Pablo Picasso e Georges Braque attorno al 1907 e cambiò per sempre le regole della pittura. L'idea rivoluzionaria fu di abbandonare la prospettiva tradizionale.</p><p>Gli oggetti vengono mostrati da più punti di vista contemporaneamente, come se fossero girati su tutti i lati. La realtà viene così sottoposta a una scomposizione in forme geometriche, cubi, coni e cilindri, poi ricomposti sulla tela. A volte si incollano pezzi di carta e giornali, dando vita al collage. L'opera che apre il Cubismo è "Les Demoiselles d'Avignon" di Picasso. È un modo nuovo e mentale di guardare il mondo.</p>`},
+{d:"Arte",t:"Il Futurismo",k:["velocità","movimento","macchine","modernità","dinamismo","Boccioni"],
+s:`<p><span class="lead">Il Futurismo</span> fu il primo movimento artistico nato in Italia a inizio Novecento, lanciato dal poeta Marinetti. I futuristi erano affascinati dal mondo moderno: le macchine, le città, la tecnologia.</p><p>Il loro mito era la velocità: volevano rappresentare il movimento e il dinamismo della vita contemporanea. Esaltavano il progresso e rifiutavano l'arte del passato, considerata immobile e superata. Umberto Boccioni, con la scultura "Forme uniche della continuità nello spazio", mostrò un corpo che avanza fendendo l'aria. Il Futurismo celebrò l'energia, le luci e i rumori della modernità, anche se con punte di esaltazione pericolosa.</p>`},
+{d:"Arte",t:"Il Surrealismo",k:["sogno","inconscio","immagini impossibili","fantasia","libere associazioni","Dalí"],
+s:`<p><span class="lead">Il Surrealismo</span> nacque negli anni Venti del Novecento, influenzato dalle scoperte di Freud sulla mente. Gli artisti vollero esplorare l'inconscio, la parte nascosta e profonda di noi.</p><p>Per questo dipingevano il mondo del sogno, dove la logica non vale e tutto è possibile. Le loro opere sono piene di immagini impossibili e accostamenti strani, nati da libere associazioni e da una fantasia senza freni. Salvador Dalí, con i suoi orologi molli del quadro "La persistenza della memoria", creò scenari onirici e spiazzanti. Il Surrealismo aprì all'arte le porte dell'immaginazione e del meraviglioso.</p>`},
+{d:"Arte",t:"Vincent van Gogh",k:["colore","pennellate vorticose","emozione","girasoli","notte stellata","tormento"],
+s:`<p><span class="lead">Vincent van Gogh</span> fu un pittore olandese dalla vita breve e tormentata, oggi considerato un genio. In vita vendette quasi nulla, ma dipinse con una passione travolgente.</p><p>La sua pittura è riconoscibile per il colore intenso e le pennellate vorticose, che sembrano muoversi sulla tela. Ogni quadro trasmette una fortissima emozione, dalla gioia dei "Girasoli alla magia inquieta della "Notte stellata", con il cielo che ruota in spirali luminose. Van Gogh trasformò il suo dolore interiore in bellezza, anticipando l'Espressionismo. La sua arte ci insegna che dipingere può essere un modo per dare senso alla vita.</p>`},
+{d:"Tecnologia",t:"Le fonti di energia rinnovabili",k:["sole","vento","acqua","pannelli solari","pale eoliche","energia pulita"],
+s:`<p><span class="lead">Le fonti rinnovabili</span> sono quelle che non si esauriscono e si rigenerano naturalmente, a differenza dei combustibili fossili come petrolio e carbone. Sono la chiave per un'energia pulita.</p><p>Il sole fornisce energia attraverso i pannelli solari, che la trasformano in elettricità o calore. Il vento fa girare le pale eoliche delle centrali. L'acqua dei fiumi e delle dighe produce energia idroelettrica. Ci sono anche il calore della Terra, geotermico, e le biomasse. Queste fonti non inquinano e non emettono gas serra: usarle è fondamentale per combattere il cambiamento climatico e costruire un futuro sostenibile.</p>`},
+{d:"Tecnologia",t:"L'elettricità e i circuiti",k:["corrente elettrica","tensione","circuito","conduttori","isolanti","sicurezza"],
+s:`<p><span class="lead">L'elettricità</span> è una forma di energia legata al movimento di minuscole particelle, gli elettroni. Quando questi si muovono ordinatamente in un materiale si genera la corrente elettrica.</p><p>Perché ci sia corrente serve un circuito chiuso: un percorso completo formato da un generatore (come una pila), dei fili e un utilizzatore (come una lampadina). La spinta che muove gli elettroni si chiama tensione e si misura in volt. Alcuni materiali, i conduttori come i metalli, lasciano passare la corrente; altri, gli isolanti come la plastica, la bloccano. Conoscere l'elettricità è importante anche per la sicurezza, perché può essere pericolosa.</p>`},
+{d:"Tecnologia",t:"L'educazione stradale",k:["segnaletica","precedenza","sicurezza","casco","distrazione","rispetto delle regole"],
+s:`<p><span class="lead">L'educazione stradale</span> insegna a muoversi in modo sicuro come pedoni, ciclisti e, un giorno, conducenti. La strada è uno spazio condiviso dove il rispetto delle regole protegge tutti.</p><p>La segnaletica, fatta di cartelli e segnali, comunica obblighi, divieti e pericoli. Regole come la precedenza servono a evitare gli incidenti agli incroci. La sicurezza passa da gesti semplici ma fondamentali: indossare il casco in bici, allacciare le cinture, attraversare sulle strisce. Il nemico numero uno è la distrazione, soprattutto quella causata dal telefono. Conoscere e rispettare le regole della strada significa avere cura della propria e dell'altrui vita.</p>`},
+{d:"Tecnologia",t:"Internet e le reti",k:["rete","server","dati","connessione","sicurezza online","impronta digitale"],
+s:`<p><span class="lead">Internet</span> è un'enorme rete che collega miliardi di dispositivi in tutto il mondo. Quando navighiamo, il nostro dispositivo chiede informazioni a potenti computer chiamati server, che inviano indietro i dati richiesti.</p><p>I dati viaggiano divisi in piccoli pacchetti attraverso cavi e segnali, grazie a una connessione. Internet ci offre infinite possibilità, ma richiede attenzione: la sicurezza online significa proteggere le password e i propri dati personali. Ogni cosa che pubblichiamo lascia un'impronta digitale difficile da cancellare. Usare la rete in modo consapevole e critico è una competenza fondamentale per i cittadini di oggi.</p>`},
+{d:"Musica",t:"Il Romanticismo musicale",k:["sentimento","orchestra","melodia","virtuosismo","sinfonia","Beethoven"],
+s:`<p><span class="lead">Il Romanticismo musicale</span> dominò l'Ottocento e mise al centro il sentimento e l'emozione. La musica non doveva più solo intrattenere, ma esprimere l'animo profondo del compositore.</p><p>L'orchestra si ingrandì per ottenere suoni potenti e travolgenti, capaci di passare dalla dolcezza alla tempesta. Si svilupparono grandi forme come la sinfonia e melodie intense e cantabili. Nacque la figura del virtuoso, il musicista dalla tecnica straordinaria che incantava il pubblico. Ludwig van Beethoven, ponte tra classicismo e Romanticismo, espresse con la sua musica la lotta, la gioia e l'ideale di libertà dell'uomo.</p>`},
+{d:"Musica",t:"La nascita del jazz",k:["improvvisazione","ritmo","blues","Stati Uniti","swing","libertà"],
+s:`<p><span class="lead">Il jazz</span> nacque agli inizi del Novecento negli Stati Uniti, nella città di New Orleans, dalla cultura degli afroamericani discendenti degli schiavi. Affonda le radici nel blues, il canto malinconico del lavoro e del dolore.</p><p>La caratteristica più affascinante del jazz è l'improvvisazione: i musicisti inventano la melodia sul momento, dialogando tra loro. Il ritmo è vivace e trascinante, come nello stile swing che faceva ballare le folle. Il jazz è soprattutto un linguaggio di libertà ed espressione personale. Da musica di una comunità emarginata è diventato un genere amato in tutto il mondo, simbolo di creatività.</p>`},
+{d:"Ed. Civica",t:"La Costituzione italiana",k:["diritti","doveri","democrazia","articoli","uguaglianza","Repubblica"],
+s:`<p><span class="lead">La Costituzione</span> è la legge fondamentale dello Stato italiano, entrata in vigore nel 1948 dopo la caduta del fascismo e la fine della guerra. È il patto che fonda la nostra convivenza.</p><p>Stabilisce i diritti e i doveri dei cittadini ed è organizzata in articoli. I primi dodici, i Principi fondamentali, sono il cuore della Repubblica: affermano la democrazia, il lavoro, l'uguaglianza di tutti davanti alla legge senza distinzioni. La Costituzione garantisce libertà fondamentali come quella di pensiero e di parola. È nata dal contributo di forze politiche diverse e rappresenta la base della nostra libertà e dei valori che ci uniscono.</p>`},
+{d:"Ed. Civica",t:"L'Agenda 2030 e i diritti",k:["17 obiettivi","sostenibilità","pace","istruzione","parità","pianeta"],
+s:`<p><span class="lead">L'Agenda 2030</span> è un grande programma firmato nel 2015 da quasi tutti i Paesi del mondo riuniti nell'ONU. Contiene 17 obiettivi di sviluppo sostenibile da raggiungere entro il 2030 per rendere il mondo migliore.</p><p>Gli obiettivi riguardano tre grandi aree: le persone, il pianeta e la prosperità. Tra essi ci sono sconfiggere la povertà e la fame, garantire l'istruzione di qualità per tutti, raggiungere la parità tra uomini e donne, proteggere l'ambiente e costruire la pace. È un impegno comune che riconosce i diritti di ogni essere umano. Ognuno, con piccoli gesti quotidiani, può contribuire a questi traguardi.</p>`},
+{d:"Ed. Civica",t:"L'Unione Europea",k:["pace","mercato unico","euro","cittadinanza europea","cooperazione","libera circolazione"],
+s:`<p><span class="lead">L'Unione Europea</span> è un'unione di Paesi europei nata dopo la Seconda guerra mondiale con un sogno: garantire la pace dopo secoli di guerre. Oggi riunisce ventisette Stati che collaborano insieme.</p><p>Tra i suoi vantaggi ci sono la libera circolazione di persone e merci, che permette di viaggiare, studiare e lavorare in tutta Europa, e il mercato unico. Molti Paesi condividono la stessa moneta, l'euro. Essere cittadini di uno Stato membro significa avere anche la cittadinanza europea, con diritti comuni. L'UE si basa sulla cooperazione e su valori come la democrazia, i diritti umani e la solidarietà tra i popoli.</p>`},
+{d:"Ed. Civica",t:"I diritti umani e l'ONU",k:["dignità","libertà","Dichiarazione Universale","uguaglianza","pace nel mondo","tutela"],
+s:`<p><span class="lead">I diritti umani</span> sono i diritti che spettano a ogni persona per il solo fatto di esistere, ovunque nasca e qualunque sia la sua condizione. Si basano sulla dignità di ogni essere umano.</p><p>Dopo gli orrori della Seconda guerra mondiale, nel 1948 le Nazioni Unite, l'ONU, approvarono la Dichiarazione Universale dei Diritti Umani. Essa afferma la libertà, l'uguaglianza e il diritto alla vita, all'istruzione e alla giustizia per tutti. L'ONU è l'organizzazione che riunisce quasi tutti gli Stati del mondo per favorire la pace nel mondo e la tutela di questi diritti. Difenderli è un compito di tutti, ogni giorno.</p>`},
+{d:"Religione",t:"Le grandi religioni del mondo",k:["monoteismo","politeismo","sacro","riti","tolleranza","dialogo"],
+s:`<p><span class="lead">Le religioni</span> accompagnano l'umanità da sempre, dando risposte alle grandi domande sul senso della vita e della morte. Esprimono il bisogno dell'uomo di rapportarsi con il sacro.</p><p>Le tre grandi religioni monoteiste, che credono in un unico Dio, sono l'Ebraismo, il Cristianesimo e l'Islam, nate tutte in Medio Oriente. In Oriente sono diffusi l'Induismo, spesso politeista, e il Buddismo. Ogni religione ha i suoi libri sacri, i suoi riti e i suoi luoghi di culto. Conoscere le diverse fedi aiuta a vivere la tolleranza e il dialogo, fondamentali per la convivenza pacifica in un mondo sempre più multiculturale.</p>`},
+{d:"Ed. Fisica",t:"La storia delle Olimpiadi",k:["antica Grecia","Olimpia","cerchi olimpici","de Coubertin","spirito sportivo","pace"],
+s:`<p><span class="lead">Le Olimpiadi</span> sono la più grande festa dello sport mondiale e hanno origini antichissime. Nacquero nell'antica Grecia, nella città di Olimpia, dove ogni quattro anni si gareggiava in onore degli dei.</p><p>Durante i giochi si proclamava una tregua sacra: le guerre si fermavano. I Giochi moderni furono fatti rinascere nel 1896 dal barone Pierre de Coubertin, convinto che lo sport unisse i popoli. Il simbolo è formato dai cinque cerchi olimpici intrecciati, che rappresentano i continenti uniti. Le Olimpiadi celebrano lo spirito sportivo, la lealtà e l'idea che lo sport possa essere un messaggio di pace tra le nazioni.</p>`}
+];
+/* ============ 50 STILI ============ */
+const STYLES = [
+{n:"Chalkboard Style",ds:"Lavagna verde con scritte a gesso, perfetta per i contenuti educativi.",cat:"Didattici e chiari"},
+{n:"Whiteboard Style",ds:"Lavagna bianca a pennarello, ideale per spiegazioni e brainstorming.",cat:"Didattici e chiari"},
+{n:"Hand-Drawn / Sketch Style",ds:"Tratti a penna come appunti: dà un tocco autentico e fatto a mano.",cat:"Didattici e chiari"},
+{n:"Flat Design Style",ds:"Icone piatte senza ombre, lo standard pulito e moderno del web.",cat:"Didattici e chiari"},
+{n:"Minimalist Style",ds:"Massima riduzione: pochi colori e solo l'essenziale.",cat:"Didattici e chiari"},
+{n:"Concise Style",ds:"Layout pulito con le sole informazioni indispensabili.",cat:"Didattici e chiari"},
+{n:"Line Art Style",ds:"Solo linee sottili senza riempimenti: versatile e leggero.",cat:"Didattici e chiari"},
+{n:"Isometric Style",ds:"Scenari 3D con prospettiva a 30°, ottimi per spiegare i processi.",cat:"Didattici e chiari"},
+{n:"Bento Grid Style",ds:"Griglia ordinata a moduli, ideale quando ci sono molti dati.",cat:"Didattici e chiari"},
+{n:"Blueprint Style",ds:"Disegno tecnico bianco su sfondo blu, da progetto ingegneristico.",cat:"Didattici e chiari"},
+{n:"Paper Cut-Out Style",ds:"Carta colorata ritagliata a strati, con ombre morbide.",cat:"Didattici e chiari"},
+{n:"Detailed Style",ds:"Massima densità di informazioni, con illustrazioni e tabelle.",cat:"Didattici e chiari"},
+{n:"Art Deco Style",ds:"Eleganza anni '20: pannelli dorati e geometrie raffinate.",cat:"Eleganti e d'epoca"},
+{n:"Art Nouveau Style",ds:"Linee floreali sinuose, adatto ai temi naturali.",cat:"Eleganti e d'epoca"},
+{n:"Bauhaus Style",ds:"Geometria pura: cerchi, triangoli e colori primari.",cat:"Eleganti e d'epoca"},
+{n:"Victorian Style",ds:"Cornici ornate e incisioni da enciclopedia d'epoca.",cat:"Eleganti e d'epoca"},
+{n:"Mid-Century Modern Style",ds:"Forme organiche anni '50-'60 con palette terrosa.",cat:"Eleganti e d'epoca"},
+{n:"Medieval Illuminated Manuscript Style",ds:"Pergamena con capilettera dorati, da codice antico.",cat:"Eleganti e d'epoca"},
+{n:"Constructivist Style",ds:"Blocchi asimmetrici di forte impatto, stile russo.",cat:"Eleganti e d'epoca"},
+{n:"Newspaper / Editorial Style",ds:"Impaginazione da prima pagina di giornale.",cat:"Eleganti e d'epoca"},
+{n:"Propaganda Poster Style",ds:"Figure monumentali e scritte forti, da manifesto.",cat:"Eleganti e d'epoca"},
+{n:"Watercolor Style",ds:"Sfumature ad acquarello, calde e delicate.",cat:"Artistici"},
+{n:"Japanese Ukiyo-e Style",ds:"Stampe giapponesi ispirate a Hokusai.",cat:"Artistici"},
+{n:"Stained Glass Style",ds:"Vetrata colorata con bordi scuri, come in una chiesa.",cat:"Artistici"},
+{n:"Woodcut / Linocut Style",ds:"Incisioni su legno: tratti decisi e pochi colori.",cat:"Artistici"},
+{n:"Collage / Mixed Media Style",ds:"Foto ritagliate e texture, effetto artigianale.",cat:"Artistici"},
+{n:"Pop Art Style",ds:"Colori vivaci e puntini, stile Andy Warhol.",cat:"Artistici"},
+{n:"Risograph Style",ds:"Texture granulosa da stampa artigianale a colori sovrapposti.",cat:"Artistici"},
+{n:"Gradient Mesh Style",ds:"Sfumature morbide e fluide, look raffinato.",cat:"Artistici"},
+{n:"Psychedelic Style",ds:"Colori acidi e forme fluide ipnotiche.",cat:"Artistici"},
+{n:"3D Style",ds:"Elementi tridimensionali realistici, con profondità e ombre.",cat:"Moderni e digitali"},
+{n:"Glassmorphism Style",ds:"Pannelli di vetro smerigliato semitrasparente.",cat:"Moderni e digitali"},
+{n:"Neumorphism Style",ds:"Elementi morbidi e incassati, ombre delicate.",cat:"Moderni e digitali"},
+{n:"Neubrutalism Style",ds:"Bordi neri spessi e ombre nette: audace e diretto.",cat:"Moderni e digitali"},
+{n:"Low-Poly Style",ds:"Superfici sfaccettate fatte di triangoli.",cat:"Moderni e digitali"},
+{n:"Dark Mode Style",ds:"Illustrazioni luminose su sfondo scuro.",cat:"Moderni e digitali"},
+{n:"Standard Style",ds:"Lo stile predefinito di NotebookLM, con palette naturale.",cat:"Moderni e digitali"},
+{n:"Comic Book Style",ds:"Vignette da fumetto con balloon e onomatopee.",cat:"Pop, retro e creativi"},
+{n:"Pixel Art Style",ds:"Tutto reso a pixel, come un videogioco 8-bit.",cat:"Pop, retro e creativi"},
+{n:"90s Style",ds:"Estetica anni '90: finestre vintage e font pixelati.",cat:"Pop, retro e creativi"},
+{n:"Anime Battle Style",ds:"Personaggi in stile manga con statistiche e aure.",cat:"Pop, retro e creativi"},
+{n:"Memphis Design Style",ds:"Colori saturi e pattern geometrici, pieno di energia.",cat:"Pop, retro e creativi"},
+{n:"Vaporwave Style",ds:"Griglia rosa-viola con estetica internet anni '80.",cat:"Pop, retro e creativi"},
+{n:"Cyberpunk Style",ds:"Sfondo nero e neon, da mondo tech e gaming.",cat:"Pop, retro e creativi"},
+{n:"Neon Glow Style",ds:"Insegne luminose su nero, atmosfera vibrante.",cat:"Pop, retro e creativi"},
+{n:"Glitch Art Style",ds:"Distorsioni digitali volute, idea di disturbo.",cat:"Pop, retro e creativi"},
+{n:"Steampunk Style",ds:"Ingranaggi d'ottone e macchine vittoriane.",cat:"Pop, retro e creativi"},
+{n:"Fantasy Map Style",ds:"Mappa fantasy con territori e castelli.",cat:"Pop, retro e creativi"},
+{n:"Mini World Style",ds:"Diorami in miniatura con effetto tilt-shift.",cat:"Pop, retro e creativi"},
+{n:"Claymorphism Style",ds:"Elementi 3D morbidi in plastilina, colori pastello.",cat:"Pop, retro e creativi"}
+];
+const CATS = ["Didattici e chiari","Eleganti e d'epoca","Artistici","Moderni e digitali","Pop, retro e creativi"];
+
+/* ============ TEMI CROMATICI ============ */
+const TEMI = [
+{n:"Colori vivaci e saturi",d:"Tinte forti e allegre, catturano subito l'attenzione."},
+{n:"Tonalità pastello delicate",d:"Colori tenui e morbidi, dall'aria gentile e ordinata."},
+{n:"Palette monocromatica (un solo colore)",d:"Sfumature di un'unica tinta: elegante e molto coerente."},
+{n:"Colori caldi (rossi, arancioni, gialli)",d:"Trasmettono energia, calore e dinamismo."},
+{n:"Colori freddi (blu, verdi, azzurri)",d:"Danno calma, ordine e senso di affidabilità."},
+{n:"Colori terrosi e naturali",d:"Marroni, verdi e ocra: adatti a natura e storia."},
+{n:"Alto contrasto (sfondo scuro, testo chiaro)",d:"Massima leggibilità anche da lontano, in proiezione."},
+{n:"Due colori complementari",d:"Una coppia che si esalta a vicenda, semplice ed efficace."},
+{n:"Colori coerenti con l'argomento",d:"La palette richiama il tema (es. blu per l'acqua)."}
+];
+
+const DENSITA = {"Minimal":"poche informazioni, molto spazio bianco","Equilibrata":"un buon equilibrio tra testo e immagini","Dettagliata":"molte informazioni ben organizzate"};
+const TONO = {"Didattico":"chiaro e adatto allo studio","Coinvolgente":"vivace e curioso, da scoperta","Formale":"sobrio e professionale"};
+
+/* ============ STATO ============ */
+let current = null;
+let concepts = [];
+let styleIdx = STYLES.findIndex(s=>s.n==="Standard Style");
+let tema = TEMI[0].n;
+let densita = "Equilibrata";
+let tono = "Didattico";
+let queue = [];
+
+/* ============ HELPER ============ */
+const $ = id => document.getElementById(id);
+const esc = s => s.replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+
+/* ---- build select stili ---- */
+function buildStyleSelect(){
+  const sel = $("selStyle");
+  sel.innerHTML = "";
+  CATS.forEach(cat=>{
+    const og = document.createElement("optgroup");
+    og.label = cat;
+    STYLES.forEach((s,i)=>{ if(s.cat===cat){ const o=document.createElement("option"); o.value=i; o.textContent=s.n; og.appendChild(o);} });
+    sel.appendChild(og);
+  });
+  sel.value = styleIdx;
+  updateStyleDesc();
+  sel.addEventListener("change",()=>{ styleIdx=+sel.value; updateStyleDesc(); updatePrompt(); });
+}
+function updateStyleDesc(){ $("styleDesc").textContent = STYLES[styleIdx].ds; }
+
+/* ---- build select temi ---- */
+function buildTemaSelect(){
+  const sel = $("selTema");
+  TEMI.forEach((t,i)=>{ const o=document.createElement("option"); o.value=t.n; o.textContent=t.n; sel.appendChild(o); });
+  sel.value = tema;
+  sel.addEventListener("change",()=>{ tema=sel.value; updatePrompt(); });
+}
+
+/* ---- segmented controls ---- */
+function buildSeg(host, obj, getVal, setVal){
+  Object.keys(obj).forEach(k=>{
+    const b=document.createElement("button");
+    b.type="button"; b.textContent=k;
+    if(k===getVal()) b.classList.add("on");
+    b.addEventListener("click",()=>{ setVal(k); [...host.children].forEach(c=>c.classList.toggle("on",c.textContent===k)); updatePrompt(); });
+    host.appendChild(b);
+  });
+}
+
+/* ---- random topic, no repeat ---- */
+function nextTopic(){
+  if(queue.length===0){
+    queue = TOPICS.map((_,i)=>i);
+    for(let i=queue.length-1;i>0;i--){ const j=Math.floor(Math.random()*(i+1)); [queue[i],queue[j]]=[queue[j],queue[i]]; }
+    if(current && queue[queue.length-1]===TOPICS.indexOf(current) && queue.length>1){ [queue[0],queue[queue.length-1]]=[queue[queue.length-1],queue[0]]; }
+  }
+  const idx = queue.pop();
+  renderTopic(TOPICS[idx], idx);
+}
+
+function discIcon(){ return '<svg viewBox="0 0 24 24" fill="none" stroke="#22804A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 5a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2z"/><path d="M8 7h8M8 11h8M8 15h5"/></svg>'; }
+
+function renderTopic(topic, idx){
+  current = topic;
+  concepts = [];
+  $("emptyHint").style.display = "none";
+  $("topicTitle").textContent = topic.t;
+  const badge = $("discBadge");
+  badge.style.display = "inline-flex";
+  badge.innerHTML = discIcon() + esc(topic.d);
+  $("counter").style.display = "block";
+  $("counter").textContent = "Argomento " + (idx+1) + " / " + TOPICS.length;
+  // checklist dei punti chiave (sopra) — si spunta da sola scrivendo il testo-fonte
+  const kr = $("kwRow");
+  kr.innerHTML = '<span class="lab">Punti chiave da trattare nel testo-fonte (si spuntano mentre scrivi):</span>';
+  const circle = '<svg class="ico-plus" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="8"/></svg>';
+  const check = '<svg class="ico-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg>';
+  topic.k.forEach(k=>{
+    const s=document.createElement("span");
+    s.className="kw"; s.dataset.kw=k;
+    s.innerHTML = circle + check + esc(k);
+    kr.appendChild(s);
+  });
+  // pulsanti concetto (sotto, nello step 2) — un clic aggiunge il concetto al prompt
+  const kc = $("kwConcept"); kc.innerHTML="";
+  topic.k.forEach(k=>{
+    const b=document.createElement("button");
+    b.className="kw"; b.type="button";
+    b.innerHTML = '<svg class="ico-plus" viewBox="0 0 24 24" fill="none" stroke="#1B6B3A" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg>' + esc(k);
+    b.addEventListener("click",()=>{ addConcept(k); b.classList.add("used"); });
+    kc.appendChild(b);
+  });
+  // testo di riferimento dettagliato (da riscrivere) + box vuoto
+  $("fonteRef").innerHTML = topic.s;
+  $("fonteOut").value = "";
+  $("grid2").style.display = "grid";
+  updateFonteMeta();
+  renderChips();
+  updatePrompt();
+  $("topicband").scrollIntoView({behavior:"smooth",block:"start"});
+}
+
+/* ---- testo-fonte (step 1) ---- */
+function updateFonteMeta(){
+  const v = $("fonteOut").value;
+  const n = v.trim().length;
+  $("fonteCount").textContent = n + (n===1 ? " carattere" : " caratteri");
+  const low = v.toLowerCase();
+  document.querySelectorAll("#kwRow .kw").forEach(s=>{
+    s.classList.toggle("done", !!s.dataset.kw && low.includes(s.dataset.kw.toLowerCase()));
+  });
+}
+function addSelectionFromSource(){
+  const ta = $("fonteOut");
+  const sel = (ta.value.substring(ta.selectionStart||0, ta.selectionEnd||0)||"").trim();
+  if(!sel){ ta.focus(); return; }
+  addConcept(sel);
+}
+
+/* ---- concetti / chips (step 2) ---- */
+function addConcept(text){
+  let t = (text||"").replace(/\s+/g," ").trim();
+  if(!t) return;
+  if(t.length>140) t = t.slice(0,140).trim()+"…";
+  if(concepts.some(c=>c.toLowerCase()===t.toLowerCase())) return;
+  concepts.push(t);
+  renderChips(); updatePrompt();
+}
+function removeConcept(i){ concepts.splice(i,1); renderChips(); updatePrompt(); }
+function renderChips(){
+  const dz=$("dropzone");
+  if(concepts.length===0){ dz.innerHTML='<span class="placeholder">Clicca una parola chiave qui sopra, oppure seleziona una frase nel testo-fonte e premi «Aggiungi»…</span>'; return; }
+  dz.innerHTML="";
+  concepts.forEach((c,i)=>{
+    const chip=document.createElement("div"); chip.className="chip";
+    chip.innerHTML='<span>'+esc(c)+'</span><button type="button" aria-label="Rimuovi" data-i="'+i+'"><svg viewBox="0 0 24 24" fill="none" stroke="#B8860B" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M6 6l12 12M18 6L6 18"/></svg></button>';
+    dz.appendChild(chip);
+  });
+  dz.querySelectorAll("button[data-i]").forEach(b=>b.addEventListener("click",()=>removeConcept(+b.dataset.i)));
+}
+
+/* ---- assembla prompt: vuoto finché non c'è almeno un concetto ---- */
+function updatePrompt(){
+  if(!current || concepts.length===0){ $("promptOut").value=""; return; }
+  const st = STYLES[styleIdx];
+  let p = "Crea un'infografica didattica in formato orizzontale.\n\n";
+  p += "Argomento: " + current.t + ".\n";
+  p += "Pubblico: studenti di terza media (13-14 anni). Lingua: italiano.\n\n";
+  p += "Concetti chiave da rappresentare:\n" + concepts.map(c=>"- "+c).join("\n") + "\n\n";
+  p += "Stile grafico: " + st.n + " — " + st.ds + "\n";
+  p += "Tema cromatico: " + tema + ".\n";
+  p += "Densità delle informazioni: " + DENSITA[densita] + ".\n";
+  p += "Tono: " + TONO[tono] + ".\n\n";
+  p += "Organizza le informazioni in modo chiaro e gerarchico: un titolo principale ben visibile, icone semplici, brevi etichette di testo, numeri e parole chiave invece di frasi lunghe.";
+  $("promptOut").value = p;
+}
+
+/* ---- copia (generica) ---- */
+function copyField(taId, flashId){
+  const ta=$(taId);
+  if(!ta.value){ ta.focus(); return; }
+  const done=()=>{ const f=$(flashId); f.classList.add("show"); setTimeout(()=>f.classList.remove("show"),1600); };
+  if(navigator.clipboard&&navigator.clipboard.writeText){ navigator.clipboard.writeText(ta.value).then(done).catch(()=>{ta.select();document.execCommand("copy");done();}); }
+  else { ta.select(); document.execCommand("copy"); done(); }
+}
+function copyPrompt(){ copyField("promptOut","copiedFlash"); }
+function copyFonte(){ copyField("fonteOut","copiedFlashFonte"); }
+
+/* ---- reset ---- */
+function resetConcepts(){ concepts=[]; renderChips(); updatePrompt(); document.querySelectorAll("#kwConcept .kw.used").forEach(k=>k.classList.remove("used")); }
+function resetFonte(){ $("fonteOut").value=""; updateFonteMeta(); $("fonteOut").focus(); }
+
+/* ============ GALLERIA STILI ============ */
+function buildStyleGallery(filter){
+  const host=$("styleGalleryBody"); host.innerHTML="";
+  const f=(filter||"").toLowerCase();
+  CATS.forEach(cat=>{
+    const items=STYLES.filter(s=>s.cat===cat && (s.n.toLowerCase().includes(f)||s.ds.toLowerCase().includes(f)));
+    if(!items.length) return;
+    const h=document.createElement("div"); h.className="style-cat"; h.textContent=cat; host.appendChild(h);
+    const g=document.createElement("div"); g.className="style-grid";
+    items.forEach(s=>{
+      const i=STYLES.indexOf(s);
+      const c=document.createElement("button"); c.className="style-card"; c.type="button";
+      c.innerHTML='<span class="nm">'+esc(s.n)+'<svg viewBox="0 0 24 24" fill="none" stroke="#1B6B3A" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span><span class="ds">'+esc(s.ds)+'</span>';
+      c.addEventListener("click",()=>{ styleIdx=i; $("selStyle").value=i; updateStyleDesc(); updatePrompt(); closeModals(); });
+      g.appendChild(c);
+    });
+    host.appendChild(g);
+  });
+  if(!host.children.length){ host.innerHTML='<p style="color:var(--muted);padding:14px 0">Nessuno stile trovato.</p>'; }
+}
+
+/* ============ GALLERIA TEMI ============ */
+function buildTemaGallery(){
+  const host=$("temaGalleryBody"); host.innerHTML="";
+  TEMI.forEach(t=>{
+    const c=document.createElement("button"); c.className="style-card"; c.type="button";
+    c.innerHTML='<span class="nm">'+esc(t.n)+'<svg viewBox="0 0 24 24" fill="none" stroke="#1B6B3A" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span><span class="ds">'+esc(t.d)+'</span>';
+    c.addEventListener("click",()=>{ tema=t.n; $("selTema").value=t.n; updatePrompt(); closeModals(); });
+    host.appendChild(c);
+  });
+}
+
+/* ============ MODALI ============ */
+function openModal(el){ el.classList.add("open"); document.body.style.overflow="hidden"; }
+function closeModals(){ document.querySelectorAll(".modal-bg").forEach(m=>m.classList.remove("open")); document.body.style.overflow=""; }
+document.querySelectorAll("[data-close]").forEach(b=>b.addEventListener("click",closeModals));
+document.querySelectorAll(".modal-bg").forEach(m=>m.addEventListener("click",e=>{ if(e.target===m) closeModals(); }));
+document.addEventListener("keydown",e=>{ if(e.key==="Escape") closeModals(); });
+
+/* ============ WIRING ============ */
+$("btnArgomenti").addEventListener("click",nextTopic);
+$("btnInfoDoc").addEventListener("click",()=>openModal($("modalDoc")));
+$("btnStyleGuide").addEventListener("click",()=>{ buildStyleGallery(""); $("styleSearch").value=""; openModal($("modalStyle")); });
+$("btnStyleGallery2").addEventListener("click",()=>{ buildStyleGallery(""); $("styleSearch").value=""; openModal($("modalStyle")); });
+$("btnTemiGuide").addEventListener("click",()=>{ buildTemaGallery(); openModal($("modalTema")); });
+$("styleSearch").addEventListener("input",e=>buildStyleGallery(e.target.value));
+$("btnCopy").addEventListener("click",copyPrompt);
+$("btnReset").addEventListener("click",resetConcepts);
+$("btnCopyFonte").addEventListener("click",copyFonte);
+$("btnResetFonte").addEventListener("click",resetFonte);
+$("btnAddSel").addEventListener("click",addSelectionFromSource);
+$("fonteOut").addEventListener("input",updateFonteMeta);
+
+/* ============ TUTORIAL NOTEBOOKLM ============ */
+const TUTORIAL=[
+ {n:1,t:"Aggiungi le tue fonti",img:"1.jpg",
+  intro:"Apri NotebookLM, crea un nuovo notebook e carica il materiale di studio: PDF, siti web, video o un testo.",
+  ann:[
+   {x:13,y:18.5,t:"Premi «Aggiungi fonti»",d:"È il primo passo: senza fonti NotebookLM non può lavorare."},
+   {x:66.5,y:72,t:"Scegli come aggiungere",d:"Carica un file, un sito web, oppure incolla un testo con «Testo copiato»."}
+  ]},
+ {n:2,t:"Incolla il testo-fonte",img:"2.jpg",
+  intro:"Se scegli «Testo copiato», incolla qui il TESTO-FONTE che hai scritto nello Step 1 qui sotto (il pulsante «Copia testo»).",
+  ann:[
+   {x:50,y:50,t:"Incolla il testo-fonte",d:"È il contenuto che hai scritto tu: diventa la fonte da cui NotebookLM genera l'infografica."},
+   {x:67.5,y:76.5,t:"Premi «Inserisci»",d:"Salva la fonte all'interno del notebook."}
+  ]},
+ {n:3,t:"Apri lo strumento Infografica",img:"4.jpg",mw:340,
+  intro:"Nel pannello «Studio», a destra, trovi tutti gli strumenti che NotebookLM sa creare dalle tue fonti.",
+  ann:[
+   {x:73,y:65.5,t:"Scegli «Infografica»",d:"Tra Mappa, Flashcard, Quiz e Report, seleziona Infografica."}
+  ]},
+ {n:4,t:"Personalizza e genera",img:"3.jpg",
+  intro:"Qui entra in gioco il prompt: è il momento di usare quello che costruisci qui sotto, in questa pagina.",
+  ann:[
+   {x:65.5,y:23.5,t:"Orientamento",d:"Scegli «Orizzontale», il formato consigliato per le infografiche."},
+   {x:42,y:40,t:"Stile visivo",d:"Scegli lo stile (Didattico, Editoriale, Griglia bento…). I 50 stili sono nella guida qui sotto."},
+   {x:58,y:83.5,t:"Incolla il prompt, poi «Genera»",d:"Nel campo «Descrivi l'infografica» incolla il prompt costruito nello Step 2 qui sotto e premi Genera.",key:true}
+  ]},
+ {n:5,t:"Scarica l'infografica",img:"5.jpg",
+  intro:"Dopo qualche secondo NotebookLM mostra l'infografica generata dal tuo testo-fonte e dal tuo prompt.",
+  ann:[
+   {x:45,y:50,t:"La tua infografica",d:"Il risultato finale: nasce dalle tue scelte, dal testo-fonte e dal prompt che hai costruito.",key:true},
+   {x:85,y:9,t:"Premi «Scarica»",d:"Apri il menu in alto a destra e scegli «Scarica» per salvare l'infografica come immagine."}
+  ]},
+ {n:6,t:"Ritrova il file salvato",img:"6.jpg",
+  intro:"Il browser salva l'immagine tra i download: da lì puoi usarla dove vuoi.",
+  ann:[
+   {x:48,y:70,t:"L'immagine è pronta",d:"È un file PNG ad alta risoluzione: usalo in una presentazione, stampalo per un cartellone o inseriscilo nel quaderno digitale."}
+  ]}
+];
+
+function buildTutorial(){
+  const host=$("tutBody"); host.innerHTML="";
+  TUTORIAL.forEach((step,si)=>{
+    let pins="",cards="";
+    step.ann.forEach((a,i)=>{
+      const id=si+"-"+i, k=a.key?" key":"";
+      pins+='<div class="pin'+k+'" data-id="'+id+'" style="left:'+a.x+'%;top:'+a.y+'%">'+(i+1)+'</div>';
+      cards+='<div class="acard'+(a.key?' key':'')+'" data-id="'+id+'"><div class="ah"><span class="ab">'+(i+1)+'</span><h4>'+esc(a.t)+'</h4></div><p>'+esc(a.d)+'</p></div>';
+    });
+    const w=document.createElement("div"); w.className="tut-step";
+    w.innerHTML='<div class="tut-head"><span class="tut-n">'+step.n+'</span><h3>'+esc(step.t)+'</h3></div>'+
+      '<p class="tut-intro">'+esc(step.intro)+'</p>'+
+      '<div class="annot" data-idx="'+si+'"><div class="shotwrap"'+(step.mw?' style="max-width:'+step.mw+'px;flex:0 0 auto"':'')+'><img src="'+step.img+'" alt="Schermata NotebookLM: '+esc(step.t)+'" loading="lazy">'+pins+'</div>'+
+      '<div class="cards">'+cards+'</div><svg class="leaders"></svg></div>';
+    host.appendChild(w);
+  });
+  host.querySelectorAll(".annot img").forEach(img=>{
+    const a=img.closest(".annot");
+    if(img.complete) layoutLeaders(a);
+    img.addEventListener("load",()=>layoutLeaders(a));
+  });
+  layoutAll();
+}
+function layoutAll(){ document.querySelectorAll(".annot").forEach(layoutLeaders); }
+function layoutLeaders(annot){
+  const svg=annot.querySelector(".leaders");
+  const rect=annot.getBoundingClientRect();
+  if(!svg) return;
+  if(window.innerWidth<800||rect.width<2){ svg.innerHTML=""; return; }
+  const idx=annot.dataset.idx;
+  svg.setAttribute("viewBox","0 0 "+rect.width+" "+rect.height);
+  svg.setAttribute("width",rect.width); svg.setAttribute("height",rect.height);
+  let inner='<defs><marker id="ah'+idx+'" markerWidth="11" markerHeight="11" refX="7.5" refY="4.5" orient="auto"><path d="M0 0L9 4.5L0 9z" fill="#22804A"/></marker></defs>';
+  annot.querySelectorAll(".pin").forEach(pin=>{
+    const card=annot.querySelector('.acard[data-id="'+pin.dataset.id+'"]');
+    if(!card) return;
+    const pr=pin.getBoundingClientRect(), cr=card.getBoundingClientRect();
+    const px=pr.left+pr.width/2-rect.left, py=pr.top+pr.height/2-rect.top;
+    const cx=cr.left-rect.left-3, cy=cr.top+cr.height/2-rect.top;
+    const mx=(px+cx)/2;
+    inner+='<path d="M '+cx.toFixed(1)+' '+cy.toFixed(1)+' C '+mx.toFixed(1)+' '+cy.toFixed(1)+' '+mx.toFixed(1)+' '+py.toFixed(1)+' '+(px+15).toFixed(1)+' '+py.toFixed(1)+'" marker-end="url(#ah'+idx+')"/>';
+  });
+  svg.innerHTML=inner;
+}
+let layoutTimer=null;
+window.addEventListener("resize",()=>{ clearTimeout(layoutTimer); layoutTimer=setTimeout(layoutAll,150); });
+window.addEventListener("load",layoutAll);
+$("tutorial").addEventListener("toggle",()=>{ if($("tutorial").open) setTimeout(layoutAll,30); });
+
+/* ============ INIT ============ */
+buildTutorial();
+buildStyleSelect();
+buildTemaSelect();
+buildSeg($("segDensita"),DENSITA,()=>densita,v=>densita=v);
+buildSeg($("segTono"),TONO,()=>tono,v=>tono=v);
+</script>
+</body>
+</html>
