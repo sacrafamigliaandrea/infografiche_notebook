@@ -9,41 +9,60 @@
 <link href="https://fonts.googleapis.com/css2?family=Lexend:wght@400;500;600;700&family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
 <style>
 :root{
-  --cream:#F5F9F5; --warm:#EBF2EB; --card:#FFFFFF;
-  --green:#1B6B3A; --green2:#22804A; --greenD:#0E4423; --greenL:rgba(27,107,58,.07);
-  --gold:#B8860B; --gold2:#D4A017; --goldL:rgba(184,134,11,.10);
-  --text:#1A2E1A; --muted:#4A6B4A; --light:#8BA88B;
-  --warn:#B8860B; --warnL:rgba(184,134,11,.12);
-  --brd:#C8DCC8; --brd2:#A8C4A8;
-  --shadow:0 2px 12px rgba(27,107,58,.06);
-  --shadow2:0 6px 28px rgba(27,107,58,.12);
+  /* NotebookLM dark: nero · antracite · bianco + accent blu soft */
+  --bg:#1B1C1D; --surface:#202124; --surface2:#28292A; --surface3:#303134;
+  --cream:#1B1C1D; --warm:#28292A; --card:#202124;
+  --accent:#8AB4F8; --accentD:#4285F4;
+  --green:#8AB4F8; --green2:#A6C8FF; --greenD:#E8EAED; --greenL:rgba(138,180,248,.13);
+  --gold:#E8B931; --gold2:#E8B931; --goldL:rgba(232,185,49,.14);
+  --text:#E8EAED; --muted:#9AA0A6; --light:#75797D;
+  --warn:#E8B931; --warnL:rgba(232,185,49,.14);
+  --brd:#3C4043; --brd2:#5F6368;
+  --shadow:0 2px 12px rgba(0,0,0,.35);
+  --shadow2:0 8px 30px rgba(0,0,0,.5);
   --body:'Atkinson Hyperlegible',Helvetica,Arial,sans-serif;
   --head:'Lexend',sans-serif;
   --mono:'JetBrains Mono',monospace;
-  --maxw:1440px;
+  --maxw:1320px; --topbar-h:62px;
 }
 *{box-sizing:border-box;margin:0;padding:0}
-html,body{background:var(--cream);color:var(--text);font-family:var(--body);font-size:18px;line-height:1.6}
-body{padding-bottom:40px}
+html,body{height:100%;overflow:hidden;background:var(--bg);color:var(--text);font-family:var(--body);font-size:17px;line-height:1.6}
 h1,h2,h3,h4{font-family:var(--head);line-height:1.25;color:var(--greenD)}
-button{font-family:var(--head);cursor:pointer;border:none;background:none}
+button{font-family:var(--head);cursor:pointer;border:none;background:none;color:inherit}
 .wrap{max-width:var(--maxw);margin:0 auto;padding:0 22px}
+::-webkit-scrollbar{width:11px;height:11px}
+::-webkit-scrollbar-thumb{background:#43474b;border-radius:8px;border:3px solid var(--bg)}
+::-webkit-scrollbar-thumb:hover{background:#54585c}
 
 /* ---------- TOPBAR ---------- */
-header.top{background:linear-gradient(135deg,var(--green),var(--greenD));color:#fff;padding:18px 0;box-shadow:var(--shadow2);position:sticky;top:0;z-index:30}
-.top .wrap{display:flex;align-items:center;gap:18px;flex-wrap:wrap}
-.brand{display:flex;align-items:center;gap:13px;flex:1;min-width:260px}
-.brand .logo{width:46px;height:46px;flex:0 0 auto}
-.brand h1{color:#fff;font-size:1.32rem;letter-spacing:-.01em}
-.brand p{color:#CFE6D6;font-size:.82rem;font-family:var(--body)}
-.top-actions{display:flex;gap:10px;flex-wrap:wrap;align-items:center}
-.btn{display:inline-flex;align-items:center;gap:9px;font-size:1rem;font-weight:600;padding:12px 20px;border-radius:13px;min-height:48px;transition:transform .12s,box-shadow .2s,background .2s}
+header.top{height:var(--topbar-h);background:var(--surface);border-bottom:1px solid var(--border,var(--brd));position:fixed;top:0;left:0;right:0;z-index:30;display:flex;align-items:center}
+.top .wrap{display:flex;align-items:center;gap:16px;width:100%}
+.brand{display:flex;align-items:center;gap:11px;flex:0 0 auto;min-width:0}
+.brand .logo{width:34px;height:34px;flex:0 0 auto}
+.brand h1{color:var(--text);font-size:1.04rem;letter-spacing:-.01em;white-space:nowrap}
+.brand p{display:none}
+/* navigazione tra sezioni */
+nav.nav{display:flex;gap:5px;flex:1;justify-content:center;flex-wrap:wrap}
+.navbtn{display:inline-flex;align-items:center;gap:8px;font-size:.9rem;font-weight:600;padding:8px 15px;border-radius:999px;color:var(--muted);background:transparent;border:1px solid transparent;transition:all .15s;white-space:nowrap}
+.navbtn svg{width:17px;height:17px;flex:0 0 auto}
+.navbtn:hover{color:var(--text);background:var(--surface3)}
+.navbtn.active{color:var(--accent);background:rgba(138,180,248,.15);border-color:rgba(138,180,248,.35)}
+.btn{display:inline-flex;align-items:center;gap:9px;font-size:.96rem;font-weight:600;padding:11px 18px;border-radius:12px;min-height:46px;transition:transform .12s,box-shadow .2s,background .2s}
 .btn:active{transform:translateY(1px)}
-.btn-primary{background:var(--gold2);color:#3a2c05;box-shadow:0 4px 14px rgba(184,134,11,.4)}
-.btn-primary:hover{background:#e3ab1c}
-.btn-ghost{background:rgba(255,255,255,.14);color:#fff;border:1.5px solid rgba(255,255,255,.35)}
-.btn-ghost:hover{background:rgba(255,255,255,.24)}
-.btn svg{width:21px;height:21px;flex:0 0 auto}
+.btn-primary{background:var(--accent);color:#0b1f3a;box-shadow:0 4px 16px rgba(138,180,248,.25)}
+.btn-primary:hover{background:#a6c8ff}
+.btn-ghost{background:var(--surface3);color:var(--text);border:1px solid var(--brd)}
+.btn-ghost:hover{background:#3a3c40;border-color:var(--brd2)}
+.btn svg{width:20px;height:20px;flex:0 0 auto}
+
+/* ---------- VIEW SYSTEM (una pagina per sezione, no scroll documento) ---------- */
+#app{position:fixed;top:var(--topbar-h);left:0;right:0;bottom:0;overflow:hidden}
+.view{position:absolute;inset:0;display:none;overflow-y:auto;overflow-x:hidden}
+.view.active{display:block}
+.view-inner{min-height:100%;display:flex;flex-direction:column;justify-content:center;padding:26px 0}
+.view-inner.top{justify-content:flex-start}
+.view-title{font-size:1.5rem;letter-spacing:-.01em;margin-bottom:4px}
+.view-sub{color:var(--muted);font-size:.96rem;margin-bottom:20px}
 
 /* ---------- INTRO / GUIDA ---------- */
 .intro{margin-top:22px}
@@ -64,7 +83,7 @@ header.top{background:linear-gradient(135deg,var(--green),var(--greenD));color:#
 
 .anatomia{display:grid;grid-template-columns:repeat(auto-fit,minmax(168px,1fr));gap:12px;margin:6px 0 8px}
 .step{background:var(--greenL);border:1px solid var(--brd);border-radius:13px;padding:14px}
-.step .n{font-family:var(--mono);font-weight:600;font-size:.78rem;color:var(--green2);background:#fff;border:1px solid var(--brd);border-radius:8px;padding:2px 9px;display:inline-block;margin-bottom:8px}
+.step .n{font-family:var(--mono);font-weight:600;font-size:.78rem;color:var(--green2);background:var(--surface2);border:1px solid var(--brd);border-radius:8px;padding:2px 9px;display:inline-block;margin-bottom:8px}
 .step h4{font-size:.98rem;margin-bottom:3px}
 .step p{font-size:.84rem;color:var(--muted)}
 .tip{display:flex;gap:11px;align-items:flex-start;background:var(--goldL);border:1px solid var(--gold);border-radius:12px;padding:13px 15px;margin-top:14px}
@@ -78,13 +97,13 @@ header.top{background:linear-gradient(135deg,var(--green),var(--greenD));color:#
 .disc-badge{display:inline-flex;align-items:center;gap:7px;font-family:var(--head);font-weight:600;font-size:.78rem;color:var(--green2);background:var(--greenL);border:1px solid var(--brd);border-radius:999px;padding:5px 13px;letter-spacing:.02em;text-transform:uppercase}
 .disc-badge svg{width:15px;height:15px}
 .topicband h2.titolo{font-size:1.7rem;margin-top:9px;letter-spacing:-.01em}
-.counter{font-family:var(--mono);font-size:.84rem;color:var(--muted);background:#fff;border:1px solid var(--brd);border-radius:10px;padding:8px 13px;align-self:center;white-space:nowrap}
+.counter{font-family:var(--mono);font-size:.84rem;color:var(--muted);background:var(--surface2);border:1px solid var(--brd);border-radius:10px;padding:8px 13px;align-self:center;white-space:nowrap}
 .empty-hint{color:var(--muted);font-size:1.02rem;margin-top:6px}
 
 /* ---------- KEYWORD PILLS ---------- */
 .kw-row{display:flex;flex-wrap:wrap;gap:9px;margin-top:16px}
 .kw-row .lab{width:100%;font-size:.82rem;color:var(--muted);font-family:var(--head);font-weight:500;margin-bottom:1px}
-.kw{font-family:var(--head);font-weight:500;font-size:.95rem;color:var(--greenD);background:#fff;border:1.5px solid var(--brd2);border-radius:999px;padding:9px 15px;min-height:42px;display:inline-flex;align-items:center;gap:8px;transition:all .15s}
+.kw{font-family:var(--head);font-weight:500;font-size:.95rem;color:var(--greenD);background:var(--surface2);border:1.5px solid var(--brd2);border-radius:999px;padding:9px 15px;min-height:42px;display:inline-flex;align-items:center;gap:8px;transition:all .15s}
 .kw:hover{border-color:var(--green2);background:var(--greenL);transform:translateY(-1px)}
 .kw svg{width:15px;height:15px;opacity:.6}
 .kw.used{background:var(--greenL);border-style:dashed;opacity:.65}
@@ -93,7 +112,7 @@ header.top{background:linear-gradient(135deg,var(--green),var(--greenD));color:#
 .grid2{display:grid;grid-template-columns:1fr 1fr;gap:20px;margin-top:20px;align-items:start}
 .cardbox{background:var(--card);border:1.5px solid var(--brd);border-radius:18px;box-shadow:var(--shadow);overflow:hidden}
 .cardbox-h{display:flex;align-items:center;gap:11px;padding:15px 20px;border-bottom:1.5px solid var(--brd);background:var(--warm)}
-.cardbox-h .ic{width:34px;height:34px;flex:0 0 auto;background:#fff;border:1px solid var(--brd);border-radius:9px;display:grid;place-items:center}
+.cardbox-h .ic{width:34px;height:34px;flex:0 0 auto;background:var(--surface2);border:1px solid var(--brd);border-radius:9px;display:grid;place-items:center}
 .cardbox-h .ic svg{width:20px;height:20px}
 .cardbox-h h3{font-size:1.04rem;flex:1}
 .cardbox-h .hint{font-size:.78rem;color:var(--muted);font-family:var(--body)}
@@ -116,7 +135,7 @@ header.top{background:linear-gradient(135deg,var(--green),var(--greenD));color:#
 .dropzone{min-height:96px;border:2px dashed var(--brd2);border-radius:14px;padding:13px;background:var(--cream);transition:all .15s;display:flex;flex-wrap:wrap;gap:9px;align-content:flex-start}
 .dropzone.drag-over{border-color:var(--green);background:var(--greenL);box-shadow:inset 0 0 0 2px var(--green)}
 .dropzone .placeholder{color:var(--light);font-size:.95rem;align-self:center;width:100%;text-align:center;pointer-events:none}
-.chip{display:inline-flex;align-items:center;gap:8px;background:#fff;border:1.5px solid var(--green2);border-radius:11px;padding:8px 10px 8px 13px;font-size:.95rem;color:var(--greenD);max-width:100%;box-shadow:var(--shadow)}
+.chip{display:inline-flex;align-items:center;gap:8px;background:var(--surface2);border:1.5px solid var(--green2);border-radius:11px;padding:8px 10px 8px 13px;font-size:.95rem;color:var(--greenD);max-width:100%;box-shadow:var(--shadow)}
 .chip span{overflow:hidden;text-overflow:ellipsis;white-space:nowrap;max-width:280px}
 .chip button{display:grid;place-items:center;width:24px;height:24px;border-radius:7px;background:var(--warnL);transition:background .15s}
 .chip button:hover{background:var(--gold)}
@@ -125,14 +144,14 @@ header.top{background:linear-gradient(135deg,var(--green),var(--greenD));color:#
 .controls{margin-top:18px;display:grid;gap:14px}
 .ctrl label{display:block;font-family:var(--head);font-weight:600;font-size:.88rem;color:var(--greenD);margin-bottom:6px}
 .ctrl select,.ctrl .seg{width:100%}
-select{font-family:var(--body);font-size:1rem;width:100%;padding:11px 13px;border:1.5px solid var(--brd2);border-radius:11px;background:#fff;color:var(--text);min-height:46px}
+select{font-family:var(--body);font-size:1rem;width:100%;padding:11px 13px;border:1.5px solid var(--brd2);border-radius:11px;background:var(--surface2);color:var(--text);min-height:46px}
 select:focus{outline:none;border-color:var(--green2);box-shadow:0 0 0 3px var(--greenL)}
 .seg{display:flex;gap:7px;flex-wrap:wrap}
-.seg button{flex:1;min-width:90px;font-size:.9rem;font-weight:500;padding:10px 8px;border-radius:11px;border:1.5px solid var(--brd2);background:#fff;color:var(--muted);min-height:44px}
+.seg button{flex:1;min-width:90px;font-size:.9rem;font-weight:500;padding:10px 8px;border-radius:11px;border:1.5px solid var(--brd2);background:var(--surface2);color:var(--muted);min-height:44px}
 .seg button.on{background:var(--green);color:#fff;border-color:var(--green)}
 .style-pick{display:flex;gap:9px;align-items:stretch}
 .style-pick select{flex:1}
-.style-pick button{flex:0 0 auto;padding:0 15px;border:1.5px solid var(--brd2);border-radius:11px;background:#fff;color:var(--green2);font-weight:600;font-size:.86rem;display:inline-flex;align-items:center;gap:7px}
+.style-pick button{flex:0 0 auto;padding:0 15px;border:1.5px solid var(--brd2);border-radius:11px;background:var(--surface2);color:var(--green2);font-weight:600;font-size:.86rem;display:inline-flex;align-items:center;gap:7px}
 .style-pick button:hover{border-color:var(--green2);background:var(--greenL)}
 .style-pick button svg{width:17px;height:17px}
 .style-desc{font-size:.82rem;color:var(--muted);margin-top:6px;min-height:1.1em}
@@ -147,9 +166,9 @@ select:focus{outline:none;border-color:var(--green2);box-shadow:0 0 0 3px var(--
 .mini svg{width:16px;height:16px}
 .mini-gold{background:var(--gold2);color:#3a2c05}
 .mini-gold:hover{background:#e3ab1c}
-.mini-ghost{background:#fff;border:1.5px solid var(--brd2);color:var(--muted)}
+.mini-ghost{background:var(--surface2);border:1.5px solid var(--brd2);color:var(--muted)}
 .mini-ghost:hover{border-color:var(--green2);color:var(--green2)}
-#promptOut{width:100%;min-height:230px;font-family:var(--mono);font-size:.92rem;line-height:1.62;color:var(--text);background:#fbfdfb;border:1.5px solid var(--brd2);border-radius:13px;padding:16px;resize:vertical}
+#promptOut{width:100%;min-height:230px;font-family:var(--mono);font-size:.92rem;line-height:1.62;color:var(--text);background:var(--surface);border:1.5px solid var(--brd2);border-radius:13px;padding:16px;resize:vertical}
 #promptOut:focus{outline:none;border-color:var(--green2);box-shadow:0 0 0 3px var(--greenL)}
 .copied-flash{color:var(--green2);font-weight:600;font-size:.86rem;opacity:0;transition:opacity .2s}
 .copied-flash.show{opacity:1}
@@ -161,7 +180,7 @@ select:focus{outline:none;border-color:var(--green2);box-shadow:0 0 0 3px var(--
 .kw.done .ico-plus{display:none}
 .kw.done .ico-check{display:inline}
 .kw.done svg{opacity:1}
-#fonteOut{width:100%;min-height:250px;font-family:var(--body);font-size:1.02rem;line-height:1.6;color:var(--text);background:#fbfdfb;border:1.5px solid var(--brd2);border-radius:13px;padding:15px;resize:vertical}
+#fonteOut{width:100%;min-height:250px;font-family:var(--body);font-size:1.02rem;line-height:1.6;color:var(--text);background:var(--surface);border:1.5px solid var(--brd2);border-radius:13px;padding:15px;resize:vertical}
 #fonteOut:focus{outline:none;border-color:var(--green2);box-shadow:0 0 0 3px var(--greenL)}
 #fonteOut::placeholder{color:var(--light)}
 .charcount{font-family:var(--mono);font-size:.78rem;color:var(--muted);align-self:center}
@@ -172,7 +191,7 @@ select:focus{outline:none;border-color:var(--green2);box-shadow:0 0 0 3px var(--
 .btn-addsel svg{width:16px;height:16px}
 
 /* ---------- MODAL (galleria stili / info docenti) ---------- */
-.modal-bg{position:fixed;inset:0;background:rgba(14,68,35,.55);backdrop-filter:blur(3px);z-index:100;display:none;align-items:flex-start;justify-content:center;padding:40px 16px;overflow-y:auto}
+.modal-bg{position:fixed;inset:0;background:rgba(0,0,0,.62);backdrop-filter:blur(3px);z-index:100;display:none;align-items:flex-start;justify-content:center;padding:40px 16px;overflow-y:auto}
 .modal-bg.open{display:flex}
 .modal{background:var(--card);border-radius:20px;max-width:920px;width:100%;box-shadow:var(--shadow2);animation:pop .25s}
 @keyframes pop{from{transform:translateY(14px);opacity:0}to{transform:none;opacity:1}}
@@ -186,7 +205,7 @@ select:focus{outline:none;border-color:var(--green2);box-shadow:0 0 0 3px var(--
 .style-search:focus{outline:none;border-color:var(--green2);box-shadow:0 0 0 3px var(--greenL)}
 .style-cat{font-family:var(--head);font-weight:600;font-size:.82rem;color:var(--green2);text-transform:uppercase;letter-spacing:.04em;margin:18px 0 9px}
 .style-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));gap:11px}
-.style-card{text-align:left;background:#fff;border:1.5px solid var(--brd);border-radius:13px;padding:13px 14px;transition:all .15s}
+.style-card{text-align:left;background:var(--surface2);border:1.5px solid var(--brd);border-radius:13px;padding:13px 14px;transition:all .15s}
 .style-card:hover{border-color:var(--green2);box-shadow:var(--shadow);transform:translateY(-2px)}
 .style-card .nm{font-family:var(--head);font-weight:600;font-size:.96rem;color:var(--greenD);display:flex;align-items:center;justify-content:space-between;gap:8px}
 .style-card .nm svg{width:16px;height:16px;opacity:0;transition:opacity .15s}
@@ -225,7 +244,7 @@ footer .sep{color:var(--brd2);margin:0 8px}
 .acard h4{font-size:.98rem;color:var(--greenD)}
 .acard p{font-size:.88rem;color:var(--muted)}
 .acard.key{border-left-color:var(--gold2);background:var(--goldL)}
-.acard.key .ab{background:#fff;color:var(--gold);border-color:var(--gold)}
+.acard.key .ab{background:var(--surface2);color:var(--gold);border-color:var(--gold)}
 .acard.key h4{color:#5c4708}
 .pin{position:absolute;width:30px;height:30px;transform:translate(-50%,-50%);border-radius:50%;background:var(--green);color:#fff;border:2.5px solid #fff;box-shadow:0 2px 9px rgba(0,0,0,.45);font-family:var(--mono);font-weight:700;font-size:.86rem;display:grid;place-items:center;z-index:2}
 .pin.key{background:var(--gold2);color:#3a2c05}
@@ -247,6 +266,38 @@ footer .sep{color:var(--brd2);margin:0 8px}
   .brand h1{font-size:1.15rem}
   .topicband h2.titolo{font-size:1.42rem}
 }
+@media(max-width:760px){
+  .navbtn span{display:none}
+  .navbtn{padding:9px 11px}
+}
+
+/* ---------- STEPPER TUTORIAL ---------- */
+#view-tutorial .tut-step{margin:0;padding:0;border:0}
+#view-tutorial .tut-step:first-of-type{padding:0}
+.stepper-nav{display:flex;align-items:center;justify-content:space-between;gap:14px;margin-top:20px}
+.dots{display:flex;gap:8px;flex:1;justify-content:center;flex-wrap:wrap}
+.dot{width:10px;height:10px;border-radius:50%;background:var(--surface3);border:1px solid var(--brd);cursor:pointer;transition:all .15s;padding:0}
+.dot.on{background:var(--accent);border-color:var(--accent);transform:scale(1.18)}
+.stepbtn{display:inline-flex;align-items:center;gap:8px;font-weight:600;font-size:.94rem;padding:11px 20px;border-radius:11px;background:var(--surface3);color:var(--text);border:1px solid var(--brd);min-height:46px}
+.stepbtn:hover:not(:disabled){background:#3a3c40;border-color:var(--brd2)}
+.stepbtn:disabled{opacity:.35;cursor:default}
+.stepbtn.primary{background:var(--accent);color:#0b1f3a;border-color:var(--accent)}
+.stepbtn.primary:hover{background:#a6c8ff}
+
+/* ---------- LAB compatto ---------- */
+.lab-head{display:flex;align-items:flex-start;gap:14px;flex-wrap:wrap}
+.lab-head .meta{flex:1;min-width:240px}
+.btn-sorteggia{display:inline-flex;align-items:center;gap:9px;font-weight:600;font-size:.96rem;padding:11px 18px;border-radius:12px;min-height:46px;background:var(--accent);color:#0b1f3a;white-space:nowrap}
+.btn-sorteggia:hover{background:#a6c8ff}
+.btn-sorteggia svg{width:20px;height:20px}
+#view-lab .topicband{margin-top:0}
+#view-lab .grid2{margin-top:16px}
+#fonteOut,#promptOut{min-height:160px}
+.fonteref{max-height:190px}
+
+/* ---------- DOCENTI ---------- */
+.doc-credit{margin-top:22px;padding-top:16px;border-top:1px solid var(--brd);color:var(--muted);font-size:.84rem;text-align:center}
+.doc-credit .sep{color:var(--brd2);margin:0 8px}
 </style>
 </head>
 <body>
@@ -257,62 +308,61 @@ footer .sep{color:var(--brd2);margin:0 8px}
       <svg class="logo" viewBox="0 0 48 48" fill="none" aria-hidden="true">
         <rect x="3" y="3" width="42" height="42" rx="11" fill="#fff" opacity=".12"/>
         <rect x="9" y="13" width="20" height="26" rx="3" fill="#fff"/>
-        <rect x="13" y="18" width="12" height="2.4" rx="1.2" fill="#1B6B3A"/>
-        <rect x="13" y="23" width="12" height="2.4" rx="1.2" fill="#1B6B3A"/>
-        <rect x="13" y="28" width="8" height="2.4" rx="1.2" fill="#1B6B3A"/>
-        <path d="M30 9l9 9-3 3-9-9z" fill="#D4A017"/>
-        <path d="M27 12l9 9-13.5 13.5-9-9z" fill="#D4A017" opacity=".9"/>
+        <rect x="13" y="18" width="12" height="2.4" rx="1.2" fill="#4285F4"/>
+        <rect x="13" y="23" width="12" height="2.4" rx="1.2" fill="#4285F4"/>
+        <rect x="13" y="28" width="8" height="2.4" rx="1.2" fill="#4285F4"/>
+        <path d="M30 9l9 9-3 3-9-9z" fill="#E8B931"/>
+        <path d="M27 12l9 9-13.5 13.5-9-9z" fill="#E8B931" opacity=".9"/>
         <path d="M13.5 25.5l9 9L18 36l-6 1.5L13.5 31z" fill="#fff"/>
-        <path d="M22.5 34.5l-9-9-1.2 1.2 9 9z" fill="#0E4423" opacity=".4"/>
+        <path d="M22.5 34.5l-9-9-1.2 1.2 9 9z" fill="#1B1C1D" opacity=".4"/>
       </svg>
       <div>
         <h1>Officina dei Prompt</h1>
         <p>Costruisci il prompt perfetto per le infografiche di NotebookLM</p>
       </div>
     </div>
-    <div class="top-actions">
-      <button class="btn btn-ghost" id="btnInfoDoc" aria-label="Informazioni per i docenti">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 16v-4M12 8h.01"/></svg>
-        Docenti
+    <nav class="nav" id="nav">
+      <button class="navbtn active" data-view="tutorial" type="button">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><path d="M8 21h8M12 17v4"/><path d="M10 8l4 2.5-4 2.5z"/></svg>
+        <span>Come si usa</span>
       </button>
-      <button class="btn btn-primary" id="btnArgomenti">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h13M3 12h9M3 18h13"/><path d="M18 9l3 3-3 3"/></svg>
-        Argomenti
+      <button class="navbtn" data-view="guida" type="button">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>
+        <span>Scrivere il prompt</span>
       </button>
-    </div>
+      <button class="navbtn" data-view="lab" type="button">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 3v6L4 18a2 2 0 0 0 2 3h12a2 2 0 0 0 2-3l-5-9V3"/><path d="M8 3h8M8 14h8"/></svg>
+        <span>Esercìtati</span>
+      </button>
+      <button class="navbtn" data-view="docenti" type="button">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 10L12 5 2 10l10 5 10-5z"/><path d="M6 12v5c0 1 2.7 3 6 3s6-2 6-3v-5"/></svg>
+        <span>Per i docenti</span>
+      </button>
+    </nav>
   </div>
 </header>
 
-<main class="wrap">
+<div id="app">
 
-  <!-- TUTORIAL NOTEBOOKLM -->
-  <details class="panel guida intro" id="tutorial" open>
-    <summary class="guida-head">
-      <span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="#1B6B3A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><path d="M8 21h8M12 17v4"/><path d="M10 8l4 2.5-4 2.5z" fill="#1B6B3A"/></svg></span>
-      <span class="tt">
-        <h2>Come si usa NotebookLM</h2>
-        <span class="sub">Guida visiva in 6 passi: dalle fonti all'infografica scaricata</span>
-      </span>
-      <span class="chev"><svg viewBox="0 0 24 24" fill="none" stroke="#4A6B4A" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg></span>
-    </summary>
-    <div class="guida-body">
-      <p class="tut-lead">NotebookLM trasforma le tue fonti (testi, PDF, video) in mappe, quiz e <b style="color:var(--greenD)">infografiche</b>. Ecco il percorso completo: i numeri sulle schermate corrispondono alle spiegazioni accanto.</p>
-      <div id="tutBody"></div>
+  <!-- VIEW: TUTORIAL (stepper, un passo per schermata) -->
+  <section class="view active" id="view-tutorial">
+    <div class="wrap view-inner top">
+      <h2 class="view-title">Come si usa NotebookLM</h2>
+      <p class="view-sub">Guida visiva in 6 passi: dalle fonti all'infografica scaricata. I numeri sulle schermate corrispondono alle spiegazioni accanto.</p>
+      <div id="tutStage"></div>
+      <div class="stepper-nav">
+        <button class="stepbtn" id="tutPrev" type="button"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" style="width:18px;height:18px"><path d="M15 6l-6 6 6 6"/></svg> Indietro</button>
+        <div class="dots" id="tutDots"></div>
+        <button class="stepbtn primary" id="tutNext" type="button">Avanti <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" style="width:18px;height:18px"><path d="M9 6l6 6-6 6"/></svg></button>
+      </div>
     </div>
-  </details>
+  </section>
 
-  <!-- GUIDA -->
-  <details class="panel guida intro" id="guida">
-    <summary class="guida-head">
-      <span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="#1B6B3A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg></span>
-      <span class="tt">
-        <h2>Come si scrive un prompt per un'infografica</h2>
-        <span class="sub">Apri la guida: l'anatomia del prompt, i 50 stili e i temi cromatici</span>
-      </span>
-      <span class="chev"><svg viewBox="0 0 24 24" fill="none" stroke="#4A6B4A" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg></span>
-    </summary>
-    <div class="guida-body">
-      <p style="color:var(--muted);font-size:.96rem;margin-bottom:14px">Un buon prompt non è una frase generica: è un <b style="color:var(--greenD)">elenco di istruzioni precise</b>. NotebookLM trasforma in grafica solo ciò che gli dici con chiarezza. Ecco i sei mattoni:</p>
+  <!-- VIEW: GUIDA -->
+  <section class="view" id="view-guida">
+    <div class="wrap view-inner top">
+      <h2 class="view-title">Come si scrive un prompt per un'infografica</h2>
+      <p class="view-sub">Un buon prompt non è una frase generica: è un <b style="color:var(--greenD)">elenco di istruzioni precise</b>. NotebookLM trasforma in grafica solo ciò che gli dici con chiarezza. Ecco i sei mattoni:</p>
       <div class="anatomia">
         <div class="step"><span class="n">1 · AZIONE</span><h4>Che cosa fare</h4><p>«Crea un'infografica didattica in formato orizzontale».</p></div>
         <div class="step"><span class="n">2 · ARGOMENTO</span><h4>Il tema</h4><p>L'argomento preciso, non vago: «la Prima guerra mondiale».</p></div>
@@ -322,7 +372,7 @@ footer .sep{color:var(--brd2);margin:0 8px}
         <div class="step"><span class="n">6 · PUBBLICO</span><h4>Per chi</h4><p>«Studenti di terza media (13-14 anni)», tono e densità.</p></div>
       </div>
       <div class="tip">
-        <svg viewBox="0 0 24 24" fill="none" stroke="#B8860B" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2a7 7 0 0 0-4 12.7V17h8v-2.3A7 7 0 0 0 12 2z"/><path d="M9 21h6M10 17v4M14 17v4"/></svg>
+        <svg viewBox="0 0 24 24" fill="none" stroke="#E8B931" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2a7 7 0 0 0-4 12.7V17h8v-2.3A7 7 0 0 0 12 2z"/><path d="M9 21h6M10 17v4M14 17v4"/></svg>
         <p><b>Strategia.</b> In NotebookLM hai circa <b>15 tentativi al giorno</b>: non sprecarli a caso. Scegli prima lo stile dalla galleria, scrivi un prompt completo e solo poi genera. Meno tentativi, risultati migliori.</p>
       </div>
       <div style="margin-top:14px;display:flex;gap:10px;flex-wrap:wrap">
@@ -336,21 +386,27 @@ footer .sep{color:var(--brd2);margin:0 8px}
         </button>
       </div>
     </div>
-  </details>
-
-  <!-- TOPIC BAND -->
-  <section class="topicband" id="topicband" aria-live="polite">
-    <div class="meta">
-      <span class="disc-badge" id="discBadge" style="display:none"></span>
-      <h2 class="titolo" id="topicTitle">Premi «Argomenti» per iniziare</h2>
-      <p class="empty-hint" id="emptyHint">Ti capiterà a sorte uno tra 50 argomenti di terza media. Da lì costruirai i tuoi due testi: prima il testo-fonte, poi il prompt.</p>
-      <div class="kw-row" id="kwRow"></div>
-    </div>
-    <div class="counter" id="counter" style="display:none"></div>
   </section>
 
-  <!-- TWO STEPS -->
-  <section class="grid2" id="grid2" style="display:none">
+  <!-- VIEW: LAB (esercitazione) -->
+  <section class="view" id="view-lab">
+    <div class="wrap view-inner top">
+      <section class="topicband lab-head" id="topicband" aria-live="polite">
+        <div class="meta">
+          <span class="disc-badge" id="discBadge" style="display:none"></span>
+          <h2 class="titolo" id="topicTitle">Sorteggia un argomento per iniziare</h2>
+          <p class="empty-hint" id="emptyHint">Ti capiterà a sorte uno tra 50 argomenti di terza media. Da lì costruirai i tuoi due testi: prima il testo-fonte, poi il prompt.</p>
+          <div class="kw-row" id="kwRow"></div>
+        </div>
+        <div class="counter" id="counter" style="display:none"></div>
+        <button class="btn-sorteggia" id="btnArgomenti" type="button">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h13M3 12h9M3 18h13"/><path d="M18 9l3 3-3 3"/></svg>
+          Sorteggia argomento
+        </button>
+      </section>
+
+      <!-- TWO STEPS -->
+      <section class="grid2" id="grid2" style="display:none">
     <!-- STEP 1: TESTO-FONTE -->
     <div class="cardbox">
       <div class="cardbox-h">
@@ -360,17 +416,17 @@ footer .sep{color:var(--brd2);margin:0 8px}
       </div>
       <div class="cardbox-b">
         <div class="sel-help">
-          <svg viewBox="0 0 24 24" fill="none" stroke="#1B6B3A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4z"/></svg>
+          <svg viewBox="0 0 24 24" fill="none" stroke="#8AB4F8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4z"/></svg>
           <p><b>Cosa fare:</b> leggi il <b>testo di riferimento</b> qui sotto e <b>riscrivilo con parole tue</b> nel box. Non copiarlo: riscriverlo ti aiuta a capirlo davvero. Questo testo lo incollerai poi nelle <b>«Fonti»</b> di NotebookLM: è il contenuto da cui nascerà l'infografica.</p>
         </div>
         <div class="reflab">
-          <svg viewBox="0 0 24 24" fill="none" stroke="#1B6B3A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>
+          <svg viewBox="0 0 24 24" fill="none" stroke="#8AB4F8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>
           Testo di riferimento &mdash; leggilo e riscrivilo con parole tue
         </div>
         <div class="fonteref" id="fonteRef"></div>
         <div class="outwrap">
           <div class="outh">
-            <h4><svg viewBox="0 0 24 24" fill="none" stroke="#1B6B3A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 5a2 2 0 0 1 2-2h9l5 5v11a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2z"/><path d="M14 3v5h5M8 13h8M8 17h6"/></svg> Testo-fonte (lo scrivi tu)</h4>
+            <h4><svg viewBox="0 0 24 24" fill="none" stroke="#8AB4F8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 5a2 2 0 0 1 2-2h9l5 5v11a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2z"/><path d="M14 3v5h5M8 13h8M8 17h6"/></svg> Testo-fonte (lo scrivi tu)</h4>
             <div class="out-actions">
               <span class="charcount" id="fonteCount">0 caratteri</span>
               <span class="copied-flash" id="copiedFlashFonte">Copiato!</span>
@@ -398,7 +454,7 @@ footer .sep{color:var(--brd2);margin:0 8px}
       </div>
       <div class="cardbox-b">
         <div class="sel-help">
-          <svg viewBox="0 0 24 24" fill="none" stroke="#1B6B3A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 17l6-6-6-6M12 19h8"/></svg>
+          <svg viewBox="0 0 24 24" fill="none" stroke="#8AB4F8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 17l6-6-6-6M12 19h8"/></svg>
           <p><b>Attenzione:</b> il prompt <b>non è il contenuto</b>, è l'<b>istruzione</b> che dice a NotebookLM <b>come</b> disegnare l'infografica. Scegli i concetti da evidenziare e l'aspetto grafico: il prompt si comporrà qui sotto, e resta <b>vuoto</b> finché non aggiungi un concetto.</p>
         </div>
         <label class="kwlab">Concetti chiave da evidenziare</label>
@@ -442,7 +498,7 @@ footer .sep{color:var(--brd2);margin:0 8px}
 
         <div class="outwrap">
           <div class="outh">
-            <h4><svg viewBox="0 0 24 24" fill="none" stroke="#1B6B3A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 17l6-6-6-6M12 19h8"/></svg> Prompt da incollare in NotebookLM</h4>
+            <h4><svg viewBox="0 0 24 24" fill="none" stroke="#8AB4F8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 17l6-6-6-6M12 19h8"/></svg> Prompt da incollare in NotebookLM</h4>
             <div class="out-actions">
               <span class="copied-flash" id="copiedFlash">Copiato!</span>
               <button class="mini mini-ghost" id="btnReset" type="button">
@@ -459,62 +515,19 @@ footer .sep{color:var(--brd2);margin:0 8px}
         </div>
       </div>
     </div>
+      </section>
+    </div>
   </section>
-</main>
 
-<footer>
-  <span>Officina dei Prompt &middot; Educazione all'IA</span>
-  <span class="sep">|</span>
-  <span>Andrea Cerioli &middot; Animatore Digitale</span>
-  <span class="sep">|</span>
-  <span>Scuola Sacra Famiglia &middot; Orzinuovi (BS)</span>
-</footer>
-
-<!-- MODAL: galleria stili -->
-<div class="modal-bg" id="modalStyle">
-  <div class="modal" role="dialog" aria-modal="true" aria-labelledby="msTitle">
-    <div class="modal-h">
-      <span class="ic" style="width:38px;height:38px;background:var(--greenL);border-radius:10px;display:grid;place-items:center"><svg viewBox="0 0 24 24" fill="none" stroke="#1B6B3A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:21px;height:21px"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/></svg></span>
-      <h3 id="msTitle">I 50 stili di NotebookLM</h3>
-      <button class="x" data-close aria-label="Chiudi"><svg viewBox="0 0 24 24" fill="none" stroke="#4A6B4A" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 6l12 12M18 6L6 18"/></svg></button>
-    </div>
-    <div class="modal-b">
-      <input class="style-search" id="styleSearch" type="text" placeholder="Cerca uno stile (es. lavagna, fumetto, acquarello)&hellip;" aria-label="Cerca stile">
-      <p style="font-size:.88rem;color:var(--muted);margin-bottom:4px">Clicca uno stile per inserirlo nel prompt. Per la didattica i più chiari sono in cima.</p>
-      <div id="styleGalleryBody"></div>
-    </div>
-  </div>
-</div>
-
-<!-- MODAL: temi -->
-<div class="modal-bg" id="modalTema">
-  <div class="modal" role="dialog" aria-modal="true" aria-labelledby="mtTitle">
-    <div class="modal-h">
-      <span class="ic" style="width:38px;height:38px;background:var(--goldL);border-radius:10px;display:grid;place-items:center"><svg viewBox="0 0 24 24" fill="none" stroke="#B8860B" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:21px;height:21px"><circle cx="13.5" cy="6.5" r="2.5"/><circle cx="17.5" cy="13" r="2.5"/><circle cx="9" cy="17" r="2.5"/><path d="M12 2a10 10 0 1 0 0 20c1.5 0 2-1 2-2s-.5-1.5-.5-2.5 1-1.5 2-1.5h1.5A4.5 4.5 0 0 0 22 11 10 10 0 0 0 12 2z"/></svg></span>
-      <h3 id="mtTitle">Temi cromatici</h3>
-      <button class="x" data-close aria-label="Chiudi"><svg viewBox="0 0 24 24" fill="none" stroke="#4A6B4A" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 6l12 12M18 6L6 18"/></svg></button>
-    </div>
-    <div class="modal-b">
-      <p style="font-size:.92rem;color:var(--muted);margin-bottom:6px">Il <b style="color:var(--greenD)">tema cromatico</b> dà l'atmosfera all'infografica. Clicca per inserirlo nel prompt.</p>
-      <div class="tema-grid" id="temaGalleryBody"></div>
-    </div>
-  </div>
-</div>
-
-<!-- MODAL: info docenti -->
-<div class="modal-bg" id="modalDoc">
-  <div class="modal" role="dialog" aria-modal="true" aria-labelledby="mdTitle">
-    <div class="modal-h">
-      <span class="ic" style="width:38px;height:38px;background:var(--greenL);border-radius:10px;display:grid;place-items:center"><svg viewBox="0 0 24 24" fill="none" stroke="#1B6B3A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:21px;height:21px"><path d="M22 10L12 5 2 10l10 5 10-5z"/><path d="M6 12v5c0 1 2.7 3 6 3s6-2 6-3v-5"/></svg></span>
-      <h3 id="mdTitle">Per i docenti</h3>
-      <button class="x" data-close aria-label="Chiudi"><svg viewBox="0 0 24 24" fill="none" stroke="#4A6B4A" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 6l12 12M18 6L6 18"/></svg></button>
-    </div>
-    <div class="modal-b idoc">
+  <!-- VIEW: DOCENTI -->
+  <section class="view" id="view-docenti">
+    <div class="wrap view-inner idoc">
+      <h2 class="view-title">Per i docenti</h2>
       <h4>Obiettivo didattico</h4>
       <p>Imparare a <b>scrivere il prompt</b> per generare infografiche didattiche efficaci con NotebookLM. Il fuoco non è il software, ma il <b>linguaggio del prompt</b>: scegliere l'argomento, isolare i concetti chiave, definire stile, colori e pubblico.</p>
       <h4>Come funziona l'attività (due step)</h4>
       <ul>
-        <li>Lo studente preme <b>Argomenti</b> e riceve a sorte uno tra 50 temi di terza media (multidisciplinari), con i <b>punti chiave</b> come traccia.</li>
+        <li>Lo studente apre <b>Esercìtati</b>, preme <b>Sorteggia argomento</b> e riceve a sorte uno tra 50 temi di terza media (multidisciplinari), con i <b>punti chiave</b> come traccia.</li>
         <li><b>Step 1 — il testo-fonte:</b> scrive lui, con parole sue, il <b>contenuto</b> da incollare nelle «Fonti» di NotebookLM. I punti chiave si spuntano da soli man mano che li tratta. Niente testo pre-scritto da copiare.</li>
         <li><b>Step 2 — il prompt:</b> sceglie i <b>concetti da evidenziare</b> (cliccando le parole chiave o selezionando frasi dal proprio testo-fonte) e definisce stile, tema, densità e tono. Il prompt resta <b>vuoto</b> finché non aggiunge un concetto.</li>
         <li>Con <b>Copia testo</b> e <b>Copia prompt</b> porta i due testi in NotebookLM e genera (poi scarica) l'infografica — passaggio supervisionato dall'adulto.</li>
@@ -535,6 +548,45 @@ footer .sep{color:var(--brd2);margin:0 8px}
         <span class="tag">Metacognizione</span>
         <span class="tag">Scrittura del prompt</span>
       </div>
+      <div class="doc-credit">
+        <span>Officina dei Prompt &middot; Educazione all'IA</span>
+        <span class="sep">|</span>
+        <span>Andrea Cerioli &middot; Animatore Digitale</span>
+        <span class="sep">|</span>
+        <span>Scuola Sacra Famiglia &middot; Orzinuovi (BS)</span>
+      </div>
+    </div>
+  </section>
+
+</div><!-- /#app -->
+
+<!-- MODAL: galleria stili -->
+<div class="modal-bg" id="modalStyle">
+  <div class="modal" role="dialog" aria-modal="true" aria-labelledby="msTitle">
+    <div class="modal-h">
+      <span class="ic" style="width:38px;height:38px;background:var(--greenL);border-radius:10px;display:grid;place-items:center"><svg viewBox="0 0 24 24" fill="none" stroke="#8AB4F8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:21px;height:21px"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/></svg></span>
+      <h3 id="msTitle">I 50 stili di NotebookLM</h3>
+      <button class="x" data-close aria-label="Chiudi"><svg viewBox="0 0 24 24" fill="none" stroke="#9AA0A6" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 6l12 12M18 6L6 18"/></svg></button>
+    </div>
+    <div class="modal-b">
+      <input class="style-search" id="styleSearch" type="text" placeholder="Cerca uno stile (es. lavagna, fumetto, acquarello)&hellip;" aria-label="Cerca stile">
+      <p style="font-size:.88rem;color:var(--muted);margin-bottom:4px">Clicca uno stile per inserirlo nel prompt. Per la didattica i più chiari sono in cima.</p>
+      <div id="styleGalleryBody"></div>
+    </div>
+  </div>
+</div>
+
+<!-- MODAL: temi -->
+<div class="modal-bg" id="modalTema">
+  <div class="modal" role="dialog" aria-modal="true" aria-labelledby="mtTitle">
+    <div class="modal-h">
+      <span class="ic" style="width:38px;height:38px;background:var(--goldL);border-radius:10px;display:grid;place-items:center"><svg viewBox="0 0 24 24" fill="none" stroke="#E8B931" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:21px;height:21px"><circle cx="13.5" cy="6.5" r="2.5"/><circle cx="17.5" cy="13" r="2.5"/><circle cx="9" cy="17" r="2.5"/><path d="M12 2a10 10 0 1 0 0 20c1.5 0 2-1 2-2s-.5-1.5-.5-2.5 1-1.5 2-1.5h1.5A4.5 4.5 0 0 0 22 11 10 10 0 0 0 12 2z"/></svg></span>
+      <h3 id="mtTitle">Temi cromatici</h3>
+      <button class="x" data-close aria-label="Chiudi"><svg viewBox="0 0 24 24" fill="none" stroke="#9AA0A6" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 6l12 12M18 6L6 18"/></svg></button>
+    </div>
+    <div class="modal-b">
+      <p style="font-size:.92rem;color:var(--muted);margin-bottom:6px">Il <b style="color:var(--greenD)">tema cromatico</b> dà l'atmosfera all'infografica. Clicca per inserirlo nel prompt.</p>
+      <div class="tema-grid" id="temaGalleryBody"></div>
     </div>
   </div>
 </div>
@@ -773,7 +825,7 @@ function nextTopic(){
   renderTopic(TOPICS[idx], idx);
 }
 
-function discIcon(){ return '<svg viewBox="0 0 24 24" fill="none" stroke="#22804A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 5a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2z"/><path d="M8 7h8M8 11h8M8 15h5"/></svg>'; }
+function discIcon(){ return '<svg viewBox="0 0 24 24" fill="none" stroke="#8AB4F8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 5a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2z"/><path d="M8 7h8M8 11h8M8 15h5"/></svg>'; }
 
 function renderTopic(topic, idx){
   current = topic;
@@ -801,7 +853,7 @@ function renderTopic(topic, idx){
   topic.k.forEach(k=>{
     const b=document.createElement("button");
     b.className="kw"; b.type="button";
-    b.innerHTML = '<svg class="ico-plus" viewBox="0 0 24 24" fill="none" stroke="#1B6B3A" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg>' + esc(k);
+    b.innerHTML = '<svg class="ico-plus" viewBox="0 0 24 24" fill="none" stroke="#8AB4F8" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg>' + esc(k);
     b.addEventListener("click",()=>{ addConcept(k); b.classList.add("used"); });
     kc.appendChild(b);
   });
@@ -812,7 +864,7 @@ function renderTopic(topic, idx){
   updateFonteMeta();
   renderChips();
   updatePrompt();
-  $("topicband").scrollIntoView({behavior:"smooth",block:"start"});
+  $("view-lab").scrollTop=0;
 }
 
 /* ---- testo-fonte (step 1) ---- */
@@ -848,7 +900,7 @@ function renderChips(){
   dz.innerHTML="";
   concepts.forEach((c,i)=>{
     const chip=document.createElement("div"); chip.className="chip";
-    chip.innerHTML='<span>'+esc(c)+'</span><button type="button" aria-label="Rimuovi" data-i="'+i+'"><svg viewBox="0 0 24 24" fill="none" stroke="#B8860B" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M6 6l12 12M18 6L6 18"/></svg></button>';
+    chip.innerHTML='<span>'+esc(c)+'</span><button type="button" aria-label="Rimuovi" data-i="'+i+'"><svg viewBox="0 0 24 24" fill="none" stroke="#E8B931" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M6 6l12 12M18 6L6 18"/></svg></button>';
     dz.appendChild(chip);
   });
   dz.querySelectorAll("button[data-i]").forEach(b=>b.addEventListener("click",()=>removeConcept(+b.dataset.i)));
@@ -897,7 +949,7 @@ function buildStyleGallery(filter){
     items.forEach(s=>{
       const i=STYLES.indexOf(s);
       const c=document.createElement("button"); c.className="style-card"; c.type="button";
-      c.innerHTML='<span class="nm">'+esc(s.n)+'<svg viewBox="0 0 24 24" fill="none" stroke="#1B6B3A" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span><span class="ds">'+esc(s.ds)+'</span>';
+      c.innerHTML='<span class="nm">'+esc(s.n)+'<svg viewBox="0 0 24 24" fill="none" stroke="#8AB4F8" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span><span class="ds">'+esc(s.ds)+'</span>';
       c.addEventListener("click",()=>{ styleIdx=i; $("selStyle").value=i; updateStyleDesc(); updatePrompt(); closeModals(); });
       g.appendChild(c);
     });
@@ -911,7 +963,7 @@ function buildTemaGallery(){
   const host=$("temaGalleryBody"); host.innerHTML="";
   TEMI.forEach(t=>{
     const c=document.createElement("button"); c.className="style-card"; c.type="button";
-    c.innerHTML='<span class="nm">'+esc(t.n)+'<svg viewBox="0 0 24 24" fill="none" stroke="#1B6B3A" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span><span class="ds">'+esc(t.d)+'</span>';
+    c.innerHTML='<span class="nm">'+esc(t.n)+'<svg viewBox="0 0 24 24" fill="none" stroke="#8AB4F8" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span><span class="ds">'+esc(t.d)+'</span>';
     c.addEventListener("click",()=>{ tema=t.n; $("selTema").value=t.n; updatePrompt(); closeModals(); });
     host.appendChild(c);
   });
@@ -924,9 +976,19 @@ document.querySelectorAll("[data-close]").forEach(b=>b.addEventListener("click",
 document.querySelectorAll(".modal-bg").forEach(m=>m.addEventListener("click",e=>{ if(e.target===m) closeModals(); }));
 document.addEventListener("keydown",e=>{ if(e.key==="Escape") closeModals(); });
 
+/* ============ ROUTER VISTE ============ */
+function showView(name){
+  document.querySelectorAll(".view").forEach(v=>v.classList.toggle("active", v.id==="view-"+name));
+  document.querySelectorAll(".navbtn").forEach(b=>b.classList.toggle("active", b.dataset.view===name));
+  const v=$("view-"+name); if(v) v.scrollTop=0;
+  if(name==="tutorial") setTimeout(layoutAll,30);
+}
+document.querySelectorAll(".navbtn").forEach(b=>b.addEventListener("click",()=>showView(b.dataset.view)));
+
 /* ============ WIRING ============ */
 $("btnArgomenti").addEventListener("click",nextTopic);
-$("btnInfoDoc").addEventListener("click",()=>openModal($("modalDoc")));
+$("tutPrev").addEventListener("click",()=>{ if(tutIdx>0){ tutIdx--; renderTutStep(); } });
+$("tutNext").addEventListener("click",()=>{ if(tutIdx<TUTORIAL.length-1){ tutIdx++; renderTutStep(); } });
 $("btnStyleGuide").addEventListener("click",()=>{ buildStyleGallery(""); $("styleSearch").value=""; openModal($("modalStyle")); });
 $("btnStyleGallery2").addEventListener("click",()=>{ buildStyleGallery(""); $("styleSearch").value=""; openModal($("modalStyle")); });
 $("btnTemiGuide").addEventListener("click",()=>{ buildTemaGallery(); openModal($("modalTema")); });
@@ -977,29 +1039,40 @@ const TUTORIAL=[
   ]}
 ];
 
-function buildTutorial(){
-  const host=$("tutBody"); host.innerHTML="";
-  TUTORIAL.forEach((step,si)=>{
-    let pins="",cards="";
-    step.ann.forEach((a,i)=>{
-      const id=si+"-"+i, k=a.key?" key":"";
-      pins+='<div class="pin'+k+'" data-id="'+id+'" style="left:'+a.x+'%;top:'+a.y+'%">'+(i+1)+'</div>';
-      cards+='<div class="acard'+(a.key?' key':'')+'" data-id="'+id+'"><div class="ah"><span class="ab">'+(i+1)+'</span><h4>'+esc(a.t)+'</h4></div><p>'+esc(a.d)+'</p></div>';
-    });
-    const w=document.createElement("div"); w.className="tut-step";
-    w.innerHTML='<div class="tut-head"><span class="tut-n">'+step.n+'</span><h3>'+esc(step.t)+'</h3></div>'+
-      '<p class="tut-intro">'+esc(step.intro)+'</p>'+
-      '<div class="annot" data-idx="'+si+'"><div class="shotwrap"'+(step.mw?' style="max-width:'+step.mw+'px;flex:0 0 auto"':'')+'><img src="'+step.img+'" alt="Schermata NotebookLM: '+esc(step.t)+'" loading="lazy">'+pins+'</div>'+
-      '<div class="cards">'+cards+'</div><svg class="leaders"></svg></div>';
-    host.appendChild(w);
+let tutIdx=0;
+function renderTutStep(){
+  const host=$("tutStage"); host.innerHTML="";
+  const step=TUTORIAL[tutIdx];
+  let pins="",cards="";
+  step.ann.forEach((a,i)=>{
+    const id="0-"+i, k=a.key?" key":"";
+    pins+='<div class="pin'+k+'" data-id="'+id+'" style="left:'+a.x+'%;top:'+a.y+'%">'+(i+1)+'</div>';
+    cards+='<div class="acard'+(a.key?' key':'')+'" data-id="'+id+'"><div class="ah"><span class="ab">'+(i+1)+'</span><h4>'+esc(a.t)+'</h4></div><p>'+esc(a.d)+'</p></div>';
   });
-  host.querySelectorAll(".annot img").forEach(img=>{
-    const a=img.closest(".annot");
-    if(img.complete) layoutLeaders(a);
-    img.addEventListener("load",()=>layoutLeaders(a));
+  const w=document.createElement("div"); w.className="tut-step";
+  w.innerHTML='<div class="tut-head"><span class="tut-n">'+step.n+'</span><h3>'+esc(step.t)+'</h3></div>'+
+    '<p class="tut-intro">'+esc(step.intro)+'</p>'+
+    '<div class="annot" data-idx="0"><div class="shotwrap"'+(step.mw?' style="max-width:'+step.mw+'px;flex:0 0 auto"':'')+'><img src="'+step.img+'" alt="Schermata NotebookLM: '+esc(step.t)+'" loading="eager">'+pins+'</div>'+
+    '<div class="cards">'+cards+'</div><svg class="leaders"></svg></div>';
+  host.appendChild(w);
+  // puntini di navigazione
+  const dots=$("tutDots"); dots.innerHTML="";
+  TUTORIAL.forEach((s,i)=>{
+    const d=document.createElement("button"); d.type="button";
+    d.className="dot"+(i===tutIdx?" on":""); d.setAttribute("aria-label","Passo "+(i+1));
+    d.addEventListener("click",()=>{ tutIdx=i; renderTutStep(); });
+    dots.appendChild(d);
   });
-  layoutAll();
+  $("tutPrev").disabled = tutIdx===0;
+  $("tutNext").disabled = tutIdx===TUTORIAL.length-1;
+  // linee guida
+  const a=w.querySelector(".annot"), img=w.querySelector("img");
+  const doLayout=()=>layoutLeaders(a);
+  if(img.complete) doLayout();
+  img.addEventListener("load",doLayout);
+  requestAnimationFrame(()=>requestAnimationFrame(doLayout));
 }
+function buildTutorial(){ renderTutStep(); }
 function layoutAll(){ document.querySelectorAll(".annot").forEach(layoutLeaders); }
 function layoutLeaders(annot){
   const svg=annot.querySelector(".leaders");
@@ -1009,7 +1082,7 @@ function layoutLeaders(annot){
   const idx=annot.dataset.idx;
   svg.setAttribute("viewBox","0 0 "+rect.width+" "+rect.height);
   svg.setAttribute("width",rect.width); svg.setAttribute("height",rect.height);
-  let inner='<defs><marker id="ah'+idx+'" markerWidth="11" markerHeight="11" refX="7.5" refY="4.5" orient="auto"><path d="M0 0L9 4.5L0 9z" fill="#22804A"/></marker></defs>';
+  let inner='<defs><marker id="ah'+idx+'" markerWidth="11" markerHeight="11" refX="7.5" refY="4.5" orient="auto"><path d="M0 0L9 4.5L0 9z" fill="#8AB4F8"/></marker></defs>';
   annot.querySelectorAll(".pin").forEach(pin=>{
     const card=annot.querySelector('.acard[data-id="'+pin.dataset.id+'"]');
     if(!card) return;
@@ -1024,7 +1097,6 @@ function layoutLeaders(annot){
 let layoutTimer=null;
 window.addEventListener("resize",()=>{ clearTimeout(layoutTimer); layoutTimer=setTimeout(layoutAll,150); });
 window.addEventListener("load",layoutAll);
-$("tutorial").addEventListener("toggle",()=>{ if($("tutorial").open) setTimeout(layoutAll,30); });
 
 /* ============ INIT ============ */
 buildTutorial();
